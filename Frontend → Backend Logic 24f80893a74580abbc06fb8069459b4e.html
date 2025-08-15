@@ -1,0 +1,782 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Frontend → Backend Logic</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="24f80893-a745-80ab-bc06-fb8069459b4e" class="page sans"><header><h1 class="page-title">Frontend → Backend Logic</h1><p class="page-description"></p></header><div class="page-body"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">API Configuration setup</summary><div class="indented"><p id="24f80893-a745-801e-86fb-c0171c60601d" class="">api.js file configuration explanation</p><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">what is config object used in the interceptors</summary><div class="indented"><hr id="24f80893-a745-8063-b23c-dc5887b91cd6"/><h2 id="24f80893-a745-80d0-a075-f357f342e231" class=""><strong>What is </strong><code><strong>config</strong></code><strong>?</strong></h2><ul id="24f80893-a745-80a2-a772-df51fa8c641b" class="bulleted-list"><li style="list-style-type:disc">In Axios, every request you make (<code>apiClient.get(...)</code>, <code>apiClient.post(...)</code>, etc.) starts as a <strong>configuration object</strong>.</li></ul><ul id="24f80893-a745-803e-800c-c460837350f0" class="bulleted-list"><li style="list-style-type:disc">This <code><strong>config</strong></code> is built by Axios from:<ol type="1" id="24f80893-a745-8087-b5c2-e4de62c770e0" class="numbered-list" start="1"><li>The defaults you set in <code>axios.create({...})</code></li></ol><ol type="1" id="24f80893-a745-8069-88ac-d4a21f5eee72" class="numbered-list" start="2"><li>The arguments you passed to <code>.get()</code> / <code>.post()</code> / etc.</li></ol><ol type="1" id="24f80893-a745-802f-ac07-f1325eb0535d" class="numbered-list" start="3"><li>Any modifications made by <strong>request interceptors</strong>.</li></ol></li></ul><p id="24f80893-a745-8056-9678-ef680d375809" class="">Think of <code>config</code> as <strong>the blueprint</strong> for the HTTP request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-8003-957e-de7da3321538" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">{
+  url: &#x27;/api/auth/login&#x27;,       // path relative to baseURL
+  baseURL: &#x27;http://localhost:8080&#x27;,
+  method: &#x27;post&#x27;,
+  headers: {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+    Authorization: &#x27;Bearer &lt;token&gt;&#x27; // added by your interceptor
+  },
+  data: { sapid: &#x27;...&#x27;, password: &#x27;...&#x27; },
+  timeout: 10000
+}
+</code></pre><hr id="24f80893-a745-8085-a132-dec139d0bf98"/><h2 id="24f80893-a745-8028-a547-e8537e5f87cc" class=""><strong>Why do we return </strong><code><strong>config</strong></code><strong>?</strong></h2><ul id="24f80893-a745-80bb-abe0-c7986cb5bdd9" class="bulleted-list"><li style="list-style-type:disc">The <strong>request interceptor</strong> is literally a function that Axios calls <em>before</em> sending the request.</li></ul><ul id="24f80893-a745-80be-9d43-fcaa15cc01c2" class="bulleted-list"><li style="list-style-type:disc">Axios expects you to <strong>return the (possibly modified) config</strong> so it knows what to send.</li></ul><ul id="24f80893-a745-8028-befc-ce88a98ffd99" class="bulleted-list"><li style="list-style-type:disc">If you don’t return it, Axios won’t have the complete request details and the request won’t proceed.</li></ul><ul id="24f80893-a745-801c-a6cc-d5d9831818c9" class="bulleted-list"><li style="list-style-type:disc">Returning <code>config</code> hands the <strong>finalized blueprint</strong> back to Axios so it can execute the request with your changes.</li></ul><hr id="24f80893-a745-8088-b5b2-de16fe45058e"/><h2 id="24f80893-a745-808f-98a6-f77a3747a4bf" class=""><strong>How it’s used in every request</strong></h2><p id="24f80893-a745-8000-a900-e8ab1a765974" class="">Here’s the flow:</p><ol type="1" id="24f80893-a745-80bb-8a05-c3199d9d8bdc" class="numbered-list" start="1"><li>You call:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-80da-8844-c78d300168c0" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">apiClient.get(&#x27;/users&#x27;)
+</code></pre></li></ol><ol type="1" id="24f80893-a745-809c-a1ff-c85066dddb97" class="numbered-list" start="2"><li>Axios internally creates the config object:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-80a5-afd8-f779062ebceb" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">{
+  baseURL: &#x27;http://localhost:8080&#x27;,
+  url: &#x27;/users&#x27;,
+  method: &#x27;get&#x27;,
+  headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; }
+}
+</code></pre></li></ol><ol type="1" id="24f80893-a745-803b-b16f-e224e457c227" class="numbered-list" start="3"><li>The request interceptor runs <strong>before the request is sent</strong>:<ul id="24f80893-a745-80ac-ba56-e1fe07a841b5" class="bulleted-list"><li style="list-style-type:disc">Reads the token from localStorage.</li></ul><ul id="24f80893-a745-8053-9173-cedf8c9aff8a" class="bulleted-list"><li style="list-style-type:disc">If found, sets:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-800d-9fca-d8f6800ac020" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">config.headers.Authorization = `Bearer ${token}`
+</code></pre></li></ul><ul id="24f80893-a745-8064-9316-d620b8d58a4d" class="bulleted-list"><li style="list-style-type:disc">Logs the URL.</li></ul><ul id="24f80893-a745-8019-a9bf-f6cde4ebcfa1" class="bulleted-list"><li style="list-style-type:disc">Returns the updated <code>config</code>.</li></ul></li></ol><ol type="1" id="24f80893-a745-8049-abc3-c232fb7d2f9c" class="numbered-list" start="4"><li>Axios takes the returned <code>config</code> and actually performs the HTTP request.</li></ol><ol type="1" id="24f80893-a745-8025-828e-e005a239d6f3" class="numbered-list" start="5"><li>The <strong>response</strong> (or an error) goes through the <strong>response interceptors</strong> before you see it.</li></ol><hr id="24f80893-a745-8020-8f89-e59ee8b90f49"/><h2 id="24f80893-a745-804f-bb58-def6aa6d8700" class=""><strong>Simple analogy</strong></h2><p id="24f80893-a745-800c-89a4-ec3cd92dc6bf" class="">Imagine <code>config</code> as a <em>pizza order slip</em>:</p><ul id="24f80893-a745-80a8-ba19-f550df473b42" class="bulleted-list"><li style="list-style-type:disc">You start with the defaults (<code>Cheese Pizza</code> — <code>baseURL</code>, <code>headers</code>).</li></ul><ul id="24f80893-a745-80f2-96b3-e2478a4ba371" class="bulleted-list"><li style="list-style-type:disc">You add some extras in your <code>.get()</code> / <code>.post()</code> call (<code>Extra Olives</code> — <code>data</code>, <code>params</code>).</li></ul><ul id="24f80893-a745-808b-9b94-fc0fb30450fe" class="bulleted-list"><li style="list-style-type:disc">The request interceptor is the chef checking every slip and saying:<blockquote id="24f80893-a745-80db-9b51-e93c6606544b" class="">“Oh, this is a VIP customer (has token), add free extra cheese (Authorization header)!”</blockquote></li></ul><ul id="24f80893-a745-80fe-8da3-fa8ee1cdf71f" class="bulleted-list"><li style="list-style-type:disc">Then the slip is handed back to the kitchen (Axios core) to bake the pizza (make the request).</li></ul><hr id="24f80893-a745-8019-a564-e3684dc57f8d"/><p id="24f80893-a745-8015-ad89-d9be64cafc52" class="">If you want, I can also <strong>draw a diagram</strong> of how this request–interceptor–response cycle works in Axios, so you can literally see how <code>config</code> flows through. That usually makes it click instantly for beginners.</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Interceptor function</summary><div class="indented"><p id="24f80893-a745-8080-93c8-c4ce443ea5d6" class="">Exactly ✅ —</p><p id="24f80893-a745-80d5-ad2b-f0c2b50a5dda" class=""><code>apiClient.interceptors.request.use()</code> expects <strong>two arguments</strong>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-8035-aebf-f7f2e0e008e0" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">apiClient.interceptors.request.use(
+  requestSuccessHandler, // runs before request is sent
+  requestErrorHandler    // runs if request config building fails
+);
+</code></pre><p id="24f80893-a745-8018-bda1-ffe7e81b2ec6" class="">In your case:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-8018-b1c9-c78e97b234f3" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">(config) =&gt; { ... }
+</code></pre><p id="24f80893-a745-800d-b460-fc27f1752f23" class="">is the <strong>requestSuccessHandler</strong> — an arrow function that <strong>receives the Axios </strong><code><strong>config</strong></code><strong> object</strong> before the request goes out.</p><ul id="24f80893-a745-803e-ad09-d5151fdd1fff" class="bulleted-list"><li style="list-style-type:disc">Axios automatically <strong>passes that </strong><code><strong>config</strong></code> into your function.</li></ul><ul id="24f80893-a745-801c-9785-f0643762c022" class="bulleted-list"><li style="list-style-type:disc">You then modify it (like adding <code>Authorization</code>) and <strong>return it</strong>.</li></ul><hr id="24f80893-a745-804a-986e-c1ad2cd1785b"/><p id="24f80893-a745-808a-8935-e649b360af43" class="">So the real shape is:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-8085-b874-f2db19fced70" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">apiClient.interceptors.request.use(
+  // success handler
+  (config) =&gt; {
+    // modify config here
+    return config; // must return so Axios can continue
+  },
+
+  // error handler (optional)
+  (error) =&gt; {
+    return Promise.reject(error);
+  }
+);
+</code></pre><hr id="24f80893-a745-8022-add7-e1d5559c88cf"/><p id="24f80893-a745-80e6-8ba4-ebd3449ad99c" class="">💡 If you <em>don’t</em> return <code>config</code> in the first function, Axios won’t know how to proceed and the request will never be sent.</p><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Promise rejct</summary><div class="indented"><p id="24f80893-a745-8033-a34a-c17eba412ac0" class="">Alright — let’s break that down slowly because it’s a <strong>core JavaScript + Axios concept</strong>.</p><hr id="24f80893-a745-8059-892a-ff9239936873"/><h2 id="24f80893-a745-801b-8569-dcd46600a82e" class="">1️⃣ <strong>What </strong><code><strong>Promise.reject(error)</strong></code><strong> does</strong></h2><ul id="24f80893-a745-80b8-a10e-e29699b79fc3" class="bulleted-list"><li style="list-style-type:disc">In JavaScript, <strong>Promises</strong> represent something that will finish <strong>later</strong> (async).</li></ul><ul id="24f80893-a745-8028-8b9e-f81e1581e0e8" class="bulleted-list"><li style="list-style-type:disc">If something goes wrong, you can make the Promise <strong>fail</strong> (reject) instead of succeed (resolve).</li></ul><ul id="24f80893-a745-8041-97af-f9ab5ebcd5c2" class="bulleted-list"><li style="list-style-type:disc"><code>Promise.reject(error)</code> is basically saying:<blockquote id="24f80893-a745-800a-84ff-e69c6af2e4d5" class="">&quot;This async operation failed — here’s the reason (error).&quot;</blockquote></li></ul><hr id="24f80893-a745-8022-a618-f495bc1dade6"/><h2 id="24f80893-a745-803a-92ba-cd96fb25c998" class="">2️⃣ <strong>Why it’s used in Axios interceptors</strong></h2><p id="24f80893-a745-802d-aee4-fe6403369b10" class="">When you have:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-809e-a321-c2c69a756297" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">(error) =&gt; {
+  console.error(&#x27;Request error:&#x27;, error);
+  return Promise.reject(error);
+}
+</code></pre><p id="24f80893-a745-8027-a4bc-ca45fcfa7488" class="">It means:</p><ul id="24f80893-a745-80f5-b029-e011804545ad" class="bulleted-list"><li style="list-style-type:disc">If Axios encounters an error <strong>before</strong> sending the request (e.g., invalid config, interceptor failure),<p id="24f80893-a745-8016-a3ff-dd1e517186c3" class="">this function will be called.</p></li></ul><ul id="24f80893-a745-806b-bd21-ef1cfdb607a4" class="bulleted-list"><li style="list-style-type:disc">We log the error.</li></ul><ul id="24f80893-a745-8026-a511-d2db9e56a959" class="bulleted-list"><li style="list-style-type:disc">Then we <code>return Promise.reject(error)</code> to <strong>pass that error back</strong> to wherever <code>.get()</code> / <code>.post()</code> was called.</li></ul><p id="24f80893-a745-8093-a84e-c4a09e0f287a" class="">Without this, Axios wouldn’t know to tell your calling code that something went wrong.</p><hr id="24f80893-a745-80f1-ad1a-f7a4a22939c3"/><h2 id="24f80893-a745-804e-9519-f4d2b60ce615" class="">3️⃣ <strong>Flow example</strong></h2><p id="24f80893-a745-8052-aaa1-c2b81c5d3d5c" class="">Let’s say you have:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-8075-aa18-ff1f4d5b31cb" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">apiClient.get(&#x27;/users&#x27;)
+  .then(response =&gt; console.log(&#x27;Data:&#x27;, response))
+  .catch(error =&gt; console.error(&#x27;Caught in .catch:&#x27;, error));
+</code></pre><ul id="24f80893-a745-80d1-b7f0-ceb38ffd192b" class="bulleted-list"><li style="list-style-type:disc">If the request config fails in the request interceptor:<ul id="24f80893-a745-800f-8061-d7b2f3b92d9d" class="bulleted-list"><li style="list-style-type:circle">Your error handler <code>(error) =&gt; { ... }</code> runs.</li></ul><ul id="24f80893-a745-801b-8f19-f65d4f595704" class="bulleted-list"><li style="list-style-type:circle"><code>Promise.reject(error)</code> is returned.</li></ul><ul id="24f80893-a745-8090-9ebd-c537e8b8142b" class="bulleted-list"><li style="list-style-type:circle">The <code>.catch(...)</code> in your calling code <strong>receives</strong> that error.</li></ul></li></ul><hr id="24f80893-a745-8095-8a88-faa7d75066ae"/><h2 id="24f80893-a745-809b-bdd7-e802715fb3c0" class="">4️⃣ <strong>Analogy</strong></h2><p id="24f80893-a745-80f1-9359-f6ec2bca05ae" class="">Think of it like <strong>throwing an error</strong> but in async style:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-80d5-92de-f6824cc84092" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">throw error; // sync world
+Promise.reject(error); // async world
+</code></pre><p id="24f80893-a745-80b9-ba24-ed7fa3236b4e" class="">If you didn’t <code>return Promise.reject(error)</code>,</p><p id="24f80893-a745-80c2-a89d-d72d113c7b2a" class="">Axios would think “oh, I got something else back, maybe it’s fine” — and your <code>.catch()</code> wouldn’t be triggered properly.</p><hr id="24f80893-a745-80f1-9ba7-e878c52e90c9"/><p id="24f80893-a745-803a-b502-ee1a06703e91" class="">If you want, I can also show <strong>the exact difference between </strong><code><strong>throw error</strong></code><strong> and </strong><code><strong>return Promise.reject(error)</strong></code><strong> in interceptors</strong>, because Axios actually treats them similarly but there’s a subtle detail that matters.</p></div></details><hr id="24f80893-a745-801d-9403-e401732ba830"/><p id="24f80893-a745-80b4-ad3e-df02095e63be" class="">
+</p></div></details><hr id="24f80893-a745-8092-9956-c4945327dc46"/><h2 id="24f80893-a745-80a8-a3df-ee7d5ce53e6e" class=""><strong>1. Importing Axios</strong></h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-80ad-9de5-c77f108b9424" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">import axios from &#x27;axios&#x27;;
+</code></pre><ul id="24f80893-a745-8076-808d-fd06bf8dc181" class="bulleted-list"><li style="list-style-type:disc">Pulls in the <code>axios</code> HTTP client library.</li></ul><ul id="24f80893-a745-8048-abbb-db319cc52e73" class="bulleted-list"><li style="list-style-type:disc"><code>axios</code> lets you make API calls easily (<code>GET</code>, <code>POST</code>, etc.) and supports features like interceptors for request/response customization.</li></ul><hr id="24f80893-a745-802d-bf97-f0e7243e414b"/><h2 id="24f80893-a745-808d-a8ef-f9351bfe278b" class=""><strong>2. API Configuration</strong></h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-8078-8470-f34fc66c65d5" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">export const API_CONFIG = {
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || &#x27;http://localhost:8080&#x27;,
+  ENDPOINTS: {
+    LOGIN: &#x27;/api/auth/login&#x27;,
+    LOGOUT: &#x27;/api/auth/logout&#x27;,
+    REFRESH_TOKEN: &#x27;/api/auth/refresh&#x27;,
+  }
+};
+</code></pre><ul id="24f80893-a745-8022-9820-fac174a19f16" class="bulleted-list"><li style="list-style-type:disc"><code><strong>BASE_URL</strong></code> is pulled from your <code>.env</code> file variable <code>VITE_API_BASE_URL</code>.<ul id="24f80893-a745-8056-8dce-df879124e197" class="bulleted-list"><li style="list-style-type:circle"><code>import.meta.env</code> is how Vite accesses environment variables.</li></ul><ul id="24f80893-a745-801f-a2b0-d021be31bed5" class="bulleted-list"><li style="list-style-type:circle">If <code>.env</code> doesn&#x27;t have <code>VITE_API_BASE_URL</code>, it defaults to <code>&#x27;http://localhost:8080&#x27;</code>.</li></ul></li></ul><ul id="24f80893-a745-806b-bfe6-ea76d79017dc" class="bulleted-list"><li style="list-style-type:disc"><code><strong>ENDPOINTS</strong></code> is just an object holding the paths for login, logout, and refresh so you don’t hardcode them multiple times in the app.</li></ul><hr id="24f80893-a745-8078-8665-da9d37c7a210"/><h2 id="24f80893-a745-80f0-8061-e3c3ff275287" class=""><strong>3. Creating an Axios instance</strong></h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-80ad-b3cc-cf012fcf4fd5" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">export const apiClient = axios.create({
+  baseURL: API_CONFIG.BASE_URL,
+  timeout: 10000, // 10 seconds timeout
+  headers: {
+    &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+  },
+});
+</code></pre><ul id="24f80893-a745-80a0-bb63-f3652340d0ca" class="bulleted-list"><li style="list-style-type:disc"><code>axios.create()</code> makes a <strong>custom Axios instance</strong> with default settings:<ul id="24f80893-a745-80df-8a33-e86dba27ef9d" class="bulleted-list"><li style="list-style-type:circle"><code>baseURL</code> → all requests will be relative to this.</li></ul><ul id="24f80893-a745-80c8-8613-dfaadd49efda" class="bulleted-list"><li style="list-style-type:circle"><code>timeout</code> → if the request takes longer than 10 seconds, it will fail.</li></ul><ul id="24f80893-a745-8066-9ccc-ff7dc65d1f32" class="bulleted-list"><li style="list-style-type:circle"><code>headers</code> → sets default request header to <code>application/json</code>.</li></ul></li></ul><hr id="24f80893-a745-808f-aa2f-c17912900872"/><h2 id="24f80893-a745-80eb-83df-cf7d949cd116" class=""><strong>4. Request Interceptor</strong></h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-8094-ace9-fbae41dc109e" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">apiClient.interceptors.request.use(
+  (config) =&gt; {
+    const token = localStorage.getItem(&#x27;authToken&#x27;);
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    console.log(&#x27;Making request to:&#x27;, config.url);
+    return config;
+  },
+  (error) =&gt; {
+    console.error(&#x27;Request error:&#x27;, error);
+    return Promise.reject(error);
+  }
+);
+</code></pre><ul id="24f80893-a745-8075-a77b-d8b0954c9984" class="bulleted-list"><li style="list-style-type:disc"><strong>Interceptors</strong> let you run code <strong>before</strong> each request.</li></ul><ul id="24f80893-a745-807f-abd5-fbfbf4252137" class="bulleted-list"><li style="list-style-type:disc"><code>config</code> is the request configuration object (URL, method, headers, etc.).</li></ul><ul id="24f80893-a745-8047-a9ae-ed34a2c751b4" class="bulleted-list"><li style="list-style-type:disc">Gets <code>authToken</code> from <code>localStorage</code>.</li></ul><ul id="24f80893-a745-80df-8c5b-ceb0c3f5fa99" class="bulleted-list"><li style="list-style-type:disc">If the token exists, adds an <code>Authorization</code> header:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-80bd-ad38-f66f2c350b15" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Authorization: Bearer &lt;token&gt;
+</code></pre><p id="24f80893-a745-802d-9b80-d4f235a286ae" class="">This is how the backend verifies who you are.</p></li></ul><ul id="24f80893-a745-8043-8cb6-ce1a3d3c7d7a" class="bulleted-list"><li style="list-style-type:disc">Logs the request URL for debugging.</li></ul><ul id="24f80893-a745-8067-b8bc-c17ef3e24199" class="bulleted-list"><li style="list-style-type:disc">If something fails during request setup, it logs and rejects the request.</li></ul><hr id="24f80893-a745-801e-858c-dfd9410932a9"/><h2 id="24f80893-a745-80ce-a6e8-e31953d6de31" class=""><strong>5. Response Interceptor</strong></h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24f80893-a745-801b-b61d-c12c492949c2" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">apiClient.interceptors.response.use(
+  (response) =&gt; {
+    console.log(&#x27;Response received:&#x27;, response.status);
+    return response;
+  },
+  (error) =&gt; {
+    console.error(&#x27;Response error:&#x27;, error.response?.status, error.response?.data);
+
+    if (error.response?.status === 401) {
+      localStorage.removeItem(&#x27;authToken&#x27;);
+      localStorage.removeItem(&#x27;userRole&#x27;);
+      localStorage.removeItem(&#x27;userSapId&#x27;);
+      localStorage.removeItem(&#x27;isAuthenticated&#x27;);
+
+      if (window.location.pathname !== &#x27;/login&#x27;) {
+        window.location.href = &#x27;/login&#x27;;
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+</code></pre><ul id="24f80893-a745-8039-b6d4-f5c9aa3a32b6" class="bulleted-list"><li style="list-style-type:disc">This runs <strong>after</strong> every response from the server.</li></ul><ul id="24f80893-a745-80c8-aa78-c8e435927eed" class="bulleted-list"><li style="list-style-type:disc">On <strong>success</strong>:<ul id="24f80893-a745-80b7-933e-e77349ad9370" class="bulleted-list"><li style="list-style-type:circle">Logs the HTTP status (e.g., <code>200 OK</code>).</li></ul><ul id="24f80893-a745-8020-a083-eba82e55231f" class="bulleted-list"><li style="list-style-type:circle">Passes the response back to your calling code.</li></ul></li></ul><ul id="24f80893-a745-80ef-9f9d-ccfbd68d4187" class="bulleted-list"><li style="list-style-type:disc">On <strong>error</strong>:<ul id="24f80893-a745-8097-8263-c9e3492eb4e9" class="bulleted-list"><li style="list-style-type:circle">Logs the status code and error data from the server.</li></ul><ul id="24f80893-a745-80fa-933c-d73e510fa19e" class="bulleted-list"><li style="list-style-type:circle">If status is <code>401</code> (Unauthorized — usually means <strong>token expired or invalid</strong>):<ul id="24f80893-a745-8004-b614-ee9d26981122" class="bulleted-list"><li style="list-style-type:square">Clears authentication-related data from <code>localStorage</code> (<code>authToken</code>, <code>userRole</code>, etc.).</li></ul><ul id="24f80893-a745-80c9-bc59-f8cc53eda25a" class="bulleted-list"><li style="list-style-type:square">Redirects the user to <code>/login</code> <strong>unless</strong> they’re already on the login page.</li></ul></li></ul></li></ul><ul id="24f80893-a745-8011-ae1d-d11ab0413ecb" class="bulleted-list"><li style="list-style-type:disc"><code>Promise.reject(error)</code> sends the error back so the calling code can handle it if needed.</li></ul><hr id="24f80893-a745-8011-86c4-ca90d80ce47e"/><h2 id="24f80893-a745-805b-9f1c-e110aa35aab2" class=""><strong>In short — What’s happening</strong></h2><ol type="1" id="24f80893-a745-8038-930b-de8af9edd8c6" class="numbered-list" start="1"><li><strong>Setup:</strong><ul id="24f80893-a745-80e2-9115-cec3dbcda1da" class="bulleted-list"><li style="list-style-type:disc">Define a reusable <code>apiClient</code> with your API base URL, headers, and timeout.</li></ul></li></ol><ol type="1" id="24f80893-a745-808d-b9ea-f8d901b27d56" class="numbered-list" start="2"><li><strong>Before request:</strong><ul id="24f80893-a745-8078-8858-ccc4c2d845b0" class="bulleted-list"><li style="list-style-type:disc">Always check if <code>authToken</code> exists in <code>localStorage</code>.</li></ul><ul id="24f80893-a745-80db-ae68-d8ad43cc1d90" class="bulleted-list"><li style="list-style-type:disc">If yes, attach it to the <code>Authorization</code> header.</li></ul></li></ol><ol type="1" id="24f80893-a745-808a-a3bd-dcded65ee017" class="numbered-list" start="3"><li><strong>After response:</strong><ul id="24f80893-a745-8085-a54d-e193ef763c66" class="bulleted-list"><li style="list-style-type:disc">If response is good → just return it.</li></ul><ul id="24f80893-a745-8097-8529-d6d7bde4cc96" class="bulleted-list"><li style="list-style-type:disc">If it’s a <code>401</code> → token is probably bad/expired:<ul id="24f80893-a745-80e2-b2bb-ddf0c7103aba" class="bulleted-list"><li style="list-style-type:circle">Wipe all stored auth data.</li></ul><ul id="24f80893-a745-80a2-ab25-eff48544ecdc" class="bulleted-list"><li style="list-style-type:circle">Redirect to login so the user can reauthenticate.</li></ul></li></ul></li></ol><hr id="24f80893-a745-80e8-8a9e-d80cc3c25af2"/><p id="24f80893-a745-80a2-85eb-f4b4646e1bfe" class="">If you want, I can now give you the <strong>matching Spring Boot backend login endpoint</strong> so that when your frontend calls <code>/api/auth/login</code>, it issues a JWT that fits perfectly with this interceptor. That way, everything will work end-to-end.</p></div></details><p id="24f80893-a745-800a-af05-d2a921737545" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

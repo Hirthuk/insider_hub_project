@@ -1,0 +1,124 @@
+# GitHub Pages Configuration for Insider Hub Project
+
+# Site settings
+title: "Insider Hub Project"
+description: "Comprehensive documentation for Insider Hub - A college appreciation and team collaboration platform built with React, Node.js, and modern web technologies."
+author: "Sharankumar P"
+email: "sharanclouddev@gmail.com"
+url: "https://sharankumarp.github.io"
+baseurl: "/insider-hub-project"
+
+# Institution info
+institution: "BITS College"
+project_type: "Final Year Project"
+year: "2024"
+
+# Social links
+social:
+  email: "sharanclouddev@gmail.com"
+  portfolio: "https://sharankumarg3.netlify.app"
+  github: "https://github.com/sharankumarp"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - "BackEnd COnfiguration"
+  - "*.html~"
+
+# Include files in build
+include:
+  - "_redirects"
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "doc"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+seo:
+  type: "Organization"
+  name: "Insider Hub Project"
+  links:
+    - "https://sharankumarg3.netlify.app"
+
+# Navigation
+navigation:
+  - title: "Home"
+    url: "/"
+  - title: "Frontend"
+    url: "/frontend.html"
+  - title: "Backend" 
+    url: "/backend/insider-hub-backend.html"
+  - title: "API Logic"
+    url: "/frontend-backend-logic.html"
+
+# Project details
+project:
+  stack:
+    frontend:
+      - "React"
+      - "Vite" 
+      - "Tailwind CSS"
+      - "JavaScript"
+    backend:
+      - "Node.js"
+      - "Express.js"
+      - "JWT Authentication"
+      - "Database Integration"
+      - "Email Services"
+  
+  features:
+    - "User Authentication & Authorization"
+    - "Appreciation System"
+    - "Profile Management"  
+    - "Real-time Updates"
+    - "Email Notifications"
+    - "Admin Panel"
+    - "Search & Filter"
+    - "Like System"
+
+# Google Analytics (optional - add your tracking ID)
+# google_analytics: UA-XXXXXXXX-X
+
+# GitHub Pages specific settings
+github:
+  repository_url: "https://github.com/sharankumarp/insider-hub-project"
+  
+# Custom variables
+custom:
+  favicon: "https://www.notion.so/icons/bullseye_orange.svg"
+  logo: "https://www.notion.so/icons/bullseye_orange.svg"
+  hero_image: "https://www.notion.so/images/page-cover/webb1.jpg"
+  
+# Site verification (optional)
+# google_site_verification: "your-verification-code"
+# bing_site_verification: "your-verification-code"

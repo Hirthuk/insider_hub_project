@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend ↔ Backend Logic - Insider Hub</title>
+    <link rel="icon" href="https://www.notion.so/icons/exchange_blue.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .doc-page {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: var(--background-primary);
+        }
+        .doc-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        .doc-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            transition: var(--transition-fast);
+        }
+        .back-button:hover {
+            gap: var(--spacing-sm);
+        }
+        .content-card {
+            background: var(--background-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+        .content-card h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        .code-section {
+            background: var(--background-dark);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+        }
+        .code-section pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .interceptor-flow {
+            background: var(--background-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md) 0;
+        }
+        .flow-step {
+            background: var(--background-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            margin: var(--spacing-sm) 0;
+            border-left: 4px solid var(--secondary-color);
+            position: relative;
+        }
+        .flow-step::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .interceptor-flow {
+            counter-reset: step-counter;
+        }
+        .api-config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        .config-item {
+            background: var(--background-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+        .config-item h4 {
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-md);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+        .analogy-box {
+            background: var(--background-secondary);
+            border: 2px dashed var(--secondary-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="https://www.notion.so/icons/exchange_blue.svg" alt="API Logic" class="nav-logo">
+                <span class="nav-title">API Logic</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="frontend.html" class="nav-link">Frontend</a>
+                <a href="backend/insider-hub-backend.html" class="nav-link">Backend</a>
+                <a href="frontend-backend-logic.html" class="nav-link active">API Logic</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-page">
+        <!-- Header -->
+        <div class="doc-header">
+            <div class="container">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+                <div style="text-align: center;">
+                    <img src="https://www.notion.so/icons/exchange_blue.svg" alt="API Logic" style="width: 60px; height: 60px; margin-bottom: 1rem; filter: brightness(0) invert(1);">
+                    <h1 style="margin: 0; font-size: 3rem;">Frontend ↔ Backend Logic</h1>
+                    <p style="margin: 1rem 0 0; font-size: 1.2rem; opacity: 0.9;">API Configuration & Interceptor Implementation</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-content">
+            <!-- API Configuration Setup -->
+            <div class="content-card">
+                <h2><i class="fas fa-cogs"></i> API Configuration Setup</h2>
+                <p>The <code>api.js</code> file handles all communication between frontend and backend with proper authentication and error handling.</p>
+
+                <h3>1. Importing Axios</h3>
+                <div class="code-section">
+                    <pre><code>import axios from 'axios';</code></pre>
+                </div>
+                <p>Pulls in the axios HTTP client library for making API calls with support for interceptors and request/response customization.</p>
+
+                <h3>2. API Configuration</h3>
+                <div class="code-section">
+                    <pre><code>export const API_CONFIG = {
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+  ENDPOINTS: {
+    LOGIN: '/api/auth/login',
+    LOGOUT: '/api/auth/logout',
+    REFRESH_TOKEN: '/api/auth/refresh',
+  }
+};</code></pre>
+                </div>
+
+                <div class="api-config-grid">
+                    <div class="config-item">
+                        <h4><i class="fas fa-server"></i> BASE_URL</h4>
+                        <p>Uses Vite environment variable <code>VITE_API_BASE_URL</code> or defaults to localhost:8080</p>
+                    </div>
+                    <div class="config-item">
+                        <h4><i class="fas fa-link"></i> ENDPOINTS</h4>
+                        <p>Centralized endpoint definitions to avoid hardcoding URLs throughout the application</p>
+                    </div>
+                </div>
+
+                <h3>3. Creating Axios Instance</h3>
+                <div class="code-section">
+                    <pre><code>export const apiClient = axios.create({
+  baseURL: API_CONFIG.BASE_URL,
+  timeout: 10000, // 10 seconds timeout
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});</code></pre>
+                </div>
+                <p>Creates a custom Axios instance with default settings for consistent API communication.</p>
+            </div>
+
+            <!-- Request Interceptor -->
+            <div class="content-card">
+                <h2><i class="fas fa-filter"></i> Request Interceptor</h2>
+                
+                <div class="highlight-box">
+                    <h3><i class="fas fa-lightbulb"></i> What is the Config Object?</h3>
+                    <p>In Axios, every request starts as a <strong>configuration object</strong> built from:</p>
+                    <ul>
+                        <li>Defaults set in <code>axios.create({})</code></li>
+                        <li>Arguments passed to <code>.get()</code>, <code>.post()</code>, etc.</li>
+                        <li>Modifications made by request interceptors</li>
+                    </ul>
+                </div>
+
+                <div class="code-section">
+                    <pre><code>// Example config object structure
+{
+  url: '/api/auth/login',
+  baseURL: 'http://localhost:8080',
+  method: 'post',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer &lt;token&gt;' // added by interceptor
+  },
+  data: { sapid: '...', password: '...' },
+  timeout: 10000
+}</code></pre>
+                </div>
+
+                <h3>Request Interceptor Implementation</h3>
+                <div class="code-section">
+                    <pre><code>apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('authToken');
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    console.log('Making request to:', config.url);
+    return config;
+  },
+  (error) => {
+    console.error('Request error:', error);
+    return Promise.reject(error);
+  }
+);</code></pre>
+                </div>
+
+                <div class="interceptor-flow">
+                    <h4>Request Flow:</h4>
+                    <div class="flow-step">
+                        <strong>You call:</strong> <code>apiClient.get('/users')</code>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Axios creates config:</strong> baseURL, url, method, headers
+                    </div>
+                    <div class="flow-step">
+                        <strong>Request interceptor runs:</strong> Reads token, adds Authorization header, logs URL
+                    </div>
+                    <div class="flow-step">
+                        <strong>Returns modified config:</strong> Axios uses updated config for HTTP request
+                    </div>
+                    <div class="flow-step">
+                        <strong>Response/Error:</strong> Goes through response interceptors
+                    </div>
+                </div>
+
+                <div class="analogy-box">
+                    <h4><i class="fas fa-pizza-slice"></i> Simple Analogy</h4>
+                    <p>Think of <code>config</code> as a <em>pizza order slip</em>:</p>
+                    <ul>
+                        <li>Defaults: "Cheese Pizza" (baseURL, headers)</li>
+                        <li>Your additions: "Extra Olives" (data, params)</li>
+                        <li>Interceptor: Chef adding "free extra cheese for VIP customer" (Authorization header)</li>
+                        <li>Final slip: Handed to kitchen (Axios core) to make the pizza (HTTP request)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Response Interceptor -->
+            <div class="content-card">
+                <h2><i class="fas fa-reply"></i> Response Interceptor</h2>
+                
+                <div class="code-section">
+                    <pre><code>apiClient.interceptors.response.use(
+  (response) => {
+    console.log('Response received:', response.status);
+    return response;
+  },
+  (error) => {
+    console.error('Response error:', error.response?.status, error.response?.data);
+
+    if (error.response?.status === 401) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('userSapId');
+      localStorage.removeItem('isAuthenticated');
+
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);</code></pre>
+                </div>
+
+                <h3>Response Handling:</h3>
+                <div class="interceptor-flow">
+                    <div class="flow-step">
+                        <strong>Success Response:</strong> Logs HTTP status, passes response to calling code
+                    </div>
+                    <div class="flow-step">
+                        <strong>Error Response:</strong> Logs status code and error data from server
+                    </div>
+                    <div class="flow-step">
+                        <strong>401 Unauthorized:</strong> Clears authentication data from localStorage
+                    </div>
+                    <div class="flow-step">
+                        <strong>Auto Redirect:</strong> Redirects to login page (unless already there)
+                    </div>
+                    <div class="flow-step">
+                        <strong>Error Propagation:</strong> Uses Promise.reject() to pass error to calling code
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promise.reject Explanation -->
+            <div class="content-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Understanding Promise.reject()</h2>
+                
+                <div class="highlight-box">
+                    <h3>What Promise.reject(error) does:</h3>
+                    <p>In JavaScript, Promises represent async operations. <code>Promise.reject(error)</code> creates a failed Promise with the given error reason.</p>
+                </div>
+
+                <h3>Why it's used in Axios interceptors:</h3>
+                <div class="code-section">
+                    <pre><code>// Without Promise.reject - error gets swallowed
+(error) => {
+  console.error('Request error:', error);
+  // No return - error disappears!
+}
+
+// With Promise.reject - error propagates correctly
+(error) => {
+  console.error('Request error:', error);
+  return Promise.reject(error); // Error reaches .catch()
+}</code></pre>
+                </div>
+
+                <h3>Flow Example:</h3>
+                <div class="interceptor-flow">
+                    <div class="flow-step">
+                        <strong>API Call:</strong> <code>apiClient.get('/users').then(...).catch(...)</code>
+                    </div>
+                    <div class="flow-step">
+                        <strong>Request Fails:</strong> Error handler in interceptor runs
+                    </div>
+                    <div class="flow-step">
+                        <strong>Promise.reject():</strong> Returns rejected Promise with error
+                    </div>
+                    <div class="flow-step">
+                        <strong>.catch() Triggered:</strong> Your calling code's .catch() receives the error
+                    </div>
+                </div>
+
+                <div class="analogy-box">
+                    <h4><i class="fas fa-bullhorn"></i> Analogy</h4>
+                    <p><code>throw error</code> (sync) = <code>Promise.reject(error)</code> (async)</p>
+                    <p>Without returning Promise.reject(), Axios thinks "oh, I got something back, maybe it's fine" and your .catch() won't trigger properly.</p>
+                </div>
+            </div>
+
+            <!-- Interceptor Functions -->
+            <div class="content-card">
+                <h2><i class="fas fa-function"></i> Interceptor Function Structure</h2>
+                
+                <p><code>apiClient.interceptors.request.use()</code> expects <strong>two arguments</strong>:</p>
+                
+                <div class="code-section">
+                    <pre><code>apiClient.interceptors.request.use(
+  requestSuccessHandler, // runs before request is sent
+  requestErrorHandler    // runs if request config building fails
+);</code></pre>
+                </div>
+
+                <div class="api-config-grid">
+                    <div class="config-item">
+                        <h4><i class="fas fa-check-circle"></i> Success Handler</h4>
+                        <p><code>(config) => { ... }</code> - Receives Axios config object, modifies it, and returns it</p>
+                    </div>
+                    <div class="config-item">
+                        <h4><i class="fas fa-times-circle"></i> Error Handler</h4>
+                        <p><code>(error) => { ... }</code> - Handles errors in request configuration and returns Promise.reject()</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3><i class="fas fa-exclamation-circle"></i> Critical Point</h3>
+                    <p>If you <em>don't</em> return <code>config</code> in the success handler, Axios won't know how to proceed and the request will never be sent!</p>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="content-card">
+                <h2><i class="fas fa-check-double"></i> Summary</h2>
+                
+                <h3>What's Happening:</h3>
+                <div class="interceptor-flow">
+                    <div class="flow-step">
+                        <strong>Setup:</strong> Define reusable apiClient with base URL, headers, and timeout
+                    </div>
+                    <div class="flow-step">
+                        <strong>Before Request:</strong> Check for authToken in localStorage and attach to Authorization header
+                    </div>
+                    <div class="flow-step">
+                        <strong>After Response:</strong> Handle success (return data) or error (clear auth data on 401, redirect to login)
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3><i class="fas fa-shield-alt"></i> Security Benefits</h3>
+                    <ul>
+                        <li><strong>Automatic Authentication:</strong> JWT tokens attached to every request</li>
+                        <li><strong>Session Management:</strong> Automatic logout on token expiry</li>
+                        <li><strong>Error Handling:</strong> Centralized error handling and logging</li>
+                        <li><strong>Consistent Headers:</strong> Proper content-type and authorization headers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Related Documentation -->
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related Documentation</h2>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="frontend.html" class="btn btn-primary">
+                        <i class="fas fa-arrow-left"></i>
+                        Frontend Documentation
+                    </a>
+                    <a href="backend/insider-hub-backend.html" class="btn btn-secondary">
+                        <i class="fas fa-server"></i>
+                        Backend Documentation
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

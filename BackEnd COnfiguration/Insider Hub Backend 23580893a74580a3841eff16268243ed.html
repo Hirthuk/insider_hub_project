@@ -1,0 +1,682 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Insider Hub Backend</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="23580893-a745-80a3-841e-ff16268243ed" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/met_william_morris_1877_willow.jpg" style="object-position:center 90%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="https://www.notion.so/icons/bomb_blue.svg"/></div><h1 class="page-title">Insider Hub Backend</h1><p class="page-description"></p></header><div class="page-body"><h2 id="23580893-a745-8055-b614-f5df1dcc3a71" class="">Backend - Stack</h2><p id="23580893-a745-8099-b0cc-c0e1697402d8" class="">Database - PostgreSQL Neon database</p><p id="23580893-a745-80f3-91c3-df440e1abed1" class="">Code - Java with Spring Boot Framework </p><p id="24c80893-a745-80b7-8090-f64ce197909f" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Backend Workflow with files</summary><div class="indented"><p id="24c80893-a745-8014-84c6-f9a02205d914" class="">High-level flow</p><ul id="24c80893-a745-802d-9cf9-eef6974d93cc" class="bulleted-list"><li style="list-style-type:disc">Frontend calls /api/auth/login with credentials (sapid + password).</li></ul><ul id="24c80893-a745-8014-b8f5-ce9d79a4605a" class="bulleted-list"><li style="list-style-type:disc">Backend verifies credentials against Neon (Postgres) and issues a signed JWT with role claim.</li></ul><ul id="24c80893-a745-8023-914f-f22d4c0ee4ba" class="bulleted-list"><li style="list-style-type:disc">Frontend stores the JWT and sends it in Authorization: Bearer &lt;token&gt; for protected endpoints.</li></ul><ul id="24c80893-a745-80d3-9b63-d3e9b3bf1335" class="bulleted-list"><li style="list-style-type:disc">A JWT filter validates the token on every request and sets the user + role into Spring Security’s context.</li></ul><ul id="24c80893-a745-8099-8b4b-f9c22f0778f2" class="bulleted-list"><li style="list-style-type:disc">@PreAuthorize(&quot;hasRole(&#x27;ADMIN&#x27;)&quot;) checks the role and allows/denies controller methods.</li></ul><ul id="24c80893-a745-80ae-a158-c6956526a633" class="bulleted-list"><li style="list-style-type:disc">Controllers delegate to services; services use repositories to operate on the database.</li></ul><ul id="24c80893-a745-8012-a76b-e0d744977752" class="bulleted-list"><li style="list-style-type:disc">Errors are returned uniformly via @ControllerAdvice.</li></ul><p id="24c80893-a745-80ea-9cc1-eab734a536f1" class="">Detailed flow, step-by-step</p><ol type="1" id="24c80893-a745-80f6-a167-c881187931c2" class="numbered-list" start="1"><li>App startup and configuration</li></ol><ul id="24c80893-a745-805b-b0c8-dbd91070b568" class="bulleted-list"><li style="list-style-type:disc">Spring Boot auto-configures:<ul id="24c80893-a745-80c4-8117-fd91cc5b16fe" class="bulleted-list"><li style="list-style-type:circle">DataSource (Hikari) to Neon using application.properties.</li></ul><ul id="24c80893-a745-803c-8ef6-ee150aa747a1" class="bulleted-list"><li style="list-style-type:circle">JPA/Hibernate scans your @Entity (UsersEntity) and repositories.</li></ul><ul id="24c80893-a745-8013-bd5d-cbb493a3ec4b" class="bulleted-list"><li style="list-style-type:circle">Web layer with embedded Tomcat.</li></ul><ul id="24c80893-a745-805a-9ebf-c043d93e4360" class="bulleted-list"><li style="list-style-type:circle">Security via your SecurityConfig.</li></ul></li></ul><ul id="24c80893-a745-80ce-9f76-f2120af0d434" class="bulleted-list"><li style="list-style-type:disc">SecurityConfig does:<ul id="24c80893-a745-80a9-8dfe-d5fc0daf7297" class="bulleted-list"><li style="list-style-type:circle">Disables CSRF (stateless APIs).</li></ul><ul id="24c80893-a745-8081-816e-efb00c6a9d73" class="bulleted-list"><li style="list-style-type:circle">Permits /api/auth/login (public).</li></ul><ul id="24c80893-a745-8023-9b9f-cf3e2fdbe271" class="bulleted-list"><li style="list-style-type:circle">Requires authentication for all other endpoints.</li></ul><ul id="24c80893-a745-8002-ada6-ef9b9b7cea74" class="bulleted-list"><li style="list-style-type:circle">Registers JwtAuthFilter before UsernamePasswordAuthenticationFilter.</li></ul><ul id="24c80893-a745-80d9-b074-d0336aced2d3" class="bulleted-list"><li style="list-style-type:circle">Enables @PreAuthorize with @EnableMethodSecurity.</li></ul></li></ul><ol type="1" id="24c80893-a745-80da-bfae-f7cf327e0f81" class="numbered-list" start="1"><li>Database model (JPA)</li></ol><ul id="24c80893-a745-805a-8dce-d503166525e8" class="bulleted-list"><li style="list-style-type:disc">UsersEntity represents the users table with validations and constraints:<ul id="24c80893-a745-8075-97a9-dc4d9d92e3d7" class="bulleted-list"><li style="list-style-type:circle">email (unique), password (hashed), role (USER/ADMIN), sapid (unique), etc.</li></ul><ul id="24c80893-a745-80e3-bd63-d6045919b9cc" class="bulleted-list"><li style="list-style-type:circle">creation_date auto-set with @PrePersist.</li></ul><ul id="24c80893-a745-80be-9e47-df6288eba557" class="bulleted-list"><li style="list-style-type:circle">Use wrapper types (Integer, Long) for nullable fields.</li></ul></li></ul><ul id="24c80893-a745-8000-8741-cf0faa09db0c" class="bulleted-list"><li style="list-style-type:disc">UserRepository extends JpaRepository: findAll, save, findBySapid, findByEmail, deleteBySapID.</li></ul><ol type="1" id="24c80893-a745-80b9-b1a1-d9aea6f40f82" class="numbered-list" start="1"><li>Login: issuing the JWT<p id="24c80893-a745-802b-b189-d545dbc5cb49" class="">Endpoint</p></li></ol><ul id="24c80893-a745-8050-b374-d1f80dfa17a2" class="bulleted-list"><li style="list-style-type:disc">POST /api/auth/login</li></ul><ul id="24c80893-a745-80b2-8a37-d3192bebcbd2" class="bulleted-list"><li style="list-style-type:disc">Body: { &quot;sapid&quot;: 52006992, &quot;password&quot;: &quot;mypassword123&quot; }</li></ul><p id="24c80893-a745-80ac-b553-fa570938c584" class="">AuthService.login flow</p><ul id="24c80893-a745-8020-948e-df2630778b9c" class="bulleted-list"><li style="list-style-type:disc">Read sapid + password from request DTO.</li></ul><ul id="24c80893-a745-8031-bb22-f731be938646" class="bulleted-list"><li style="list-style-type:disc">Look up user by sapid: userRepository.findBySapid(sapid).</li></ul><ul id="24c80893-a745-8058-8ecd-c8bf2056575a" class="bulleted-list"><li style="list-style-type:disc">Compare raw password with stored hash using BCrypt:<ul id="24c80893-a745-8033-90f9-efcc4a4ffeab" class="bulleted-list"><li style="list-style-type:circle">passwordEncoder.matches(raw, hashedFromDb)</li></ul></li></ul><ul id="24c80893-a745-80e5-99d3-dd746b179449" class="bulleted-list"><li style="list-style-type:disc">If matched:<ul id="24c80893-a745-8043-a49b-cbdd054f428e" class="bulleted-list"><li style="list-style-type:circle">Build JWT via JwtUtil.generateToken(sapid, role):<ul id="24c80893-a745-8075-abe2-de4be1ad5022" class="bulleted-list"><li style="list-style-type:square">Claims: subject = sapid as string, role = ADMIN/USER, iat, exp.</li></ul><ul id="24c80893-a745-80db-8056-ef77f6f62dcb" class="bulleted-list"><li style="list-style-type:square">Signed with a server-side SecretKey (HS256).</li></ul></li></ul><ul id="24c80893-a745-8039-9f11-db086f94d9ab" class="bulleted-list"><li style="list-style-type:circle">Return {&quot;role&quot;: &quot;...&quot;, &quot;token&quot;: &quot;...&quot;}.</li></ul></li></ul><ul id="24c80893-a745-80be-a147-f4349429fb62" class="bulleted-list"><li style="list-style-type:disc">If not matched → throw BadCredentialsException (handled by @ControllerAdvice → 401).</li></ul><ul id="24c80893-a745-8068-a268-d9c86412efbb" class="bulleted-list"><li style="list-style-type:disc">If sapid not found → ResourceNotFoundException → 404.</li></ul><p id="24c80893-a745-80cf-b284-d7085e847c9c" class="">JwtUtil details</p><ul id="24c80893-a745-808b-9082-e6b7982208d0" class="bulleted-list"><li style="list-style-type:disc">SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256) (kept in memory for now).</li></ul><ul id="24c80893-a745-8080-a65a-dcf75fddfccd" class="bulleted-list"><li style="list-style-type:disc">generateToken:<ul id="24c80893-a745-80b4-951e-ea4d3fe4bec4" class="bulleted-list"><li style="list-style-type:circle">setClaims({ role }), setSubject(sapid), setIssuedAt, setExpiration.</li></ul><ul id="24c80893-a745-80ec-b9c6-f425433883b4" class="bulleted-list"><li style="list-style-type:circle">signWith(secret, HS256).</li></ul></li></ul><ul id="24c80893-a745-80a4-899e-edceb9d69254" class="bulleted-list"><li style="list-style-type:disc">extractAllClaims(token): parseClaimsJws(token).getBody()</li></ul><ul id="24c80893-a745-80a2-b5b2-ef9eea18b712" class="bulleted-list"><li style="list-style-type:disc">isTokenExpired(token): checks expiration claim.</li></ul><ol type="1" id="24c80893-a745-8004-b819-cf4b85d3ff25" class="numbered-list" start="1"><li>Sending protected requests with the token</li></ol><ul id="24c80893-a745-804b-9897-c9325a9f0d06" class="bulleted-list"><li style="list-style-type:disc">Frontend stores the token from login.</li></ul><ul id="24c80893-a745-80ef-8aeb-d62b00d29ea8" class="bulleted-list"><li style="list-style-type:disc">For protected endpoints (e.g., POST /api/users, GET /api/users), include header:<p id="24c80893-a745-804f-8c18-c53d771926fb" class="">Authorization: Bearer &lt;token&gt;</p></li></ul><ol type="1" id="24c80893-a745-8022-a2b6-e7ecd4c6ac7c" class="numbered-list" start="1"><li>JwtAuthFilter: authenticating each request</li></ol><ul id="24c80893-a745-80ae-a93c-fef87875eec0" class="bulleted-list"><li style="list-style-type:disc">Runs once per request (OncePerRequestFilter).</li></ul><ul id="24c80893-a745-80f7-b973-fc7a1b043a15" class="bulleted-list"><li style="list-style-type:disc">Reads Authorization header, extracts token.</li></ul><ul id="24c80893-a745-809e-8138-d825ec9811fe" class="bulleted-list"><li style="list-style-type:disc">Validates and parses claims using JwtUtil:<ul id="24c80893-a745-8019-93b9-d280a8c73dce" class="bulleted-list"><li style="list-style-type:circle">subject → sapid (string)</li></ul><ul id="24c80893-a745-808c-a60e-c877f23d9402" class="bulleted-list"><li style="list-style-type:circle">role → ADMIN or USER</li></ul></li></ul><ul id="24c80893-a745-80d5-b0b1-d9b4cccfd82b" class="bulleted-list"><li style="list-style-type:disc">Builds a Spring Authentication object:<ul id="24c80893-a745-8048-9f0c-f99c2272e30d" class="bulleted-list"><li style="list-style-type:circle">UsernamePasswordAuthenticationToken(subject, null, [new SimpleGrantedAuthority(&quot;ROLE_&quot; + role)])</li></ul></li></ul><ul id="24c80893-a745-803b-a899-f085e893fe28" class="bulleted-list"><li style="list-style-type:disc">Places it into SecurityContextHolder.</li></ul><ul id="24c80893-a745-808d-9409-c7d06b511659" class="bulleted-list"><li style="list-style-type:disc">If invalid/expired/missing token: no auth set → protected endpoints will be denied later.</li></ul><ol type="1" id="24c80893-a745-8038-85f6-c08ec4c1ad7e" class="numbered-list" start="1"><li>Authorization at controller methods</li></ol><ul id="24c80893-a745-8007-9e39-c68dd88f18d5" class="bulleted-list"><li style="list-style-type:disc">Your controller methods are annotated with:<p id="24c80893-a745-8004-8de6-d17da7fc0166" class="">@PreAuthorize(&quot;hasRole(&#x27;ADMIN&#x27;)&quot;)</p></li></ul><ul id="24c80893-a745-8094-96b8-c8f44ad63e8e" class="bulleted-list"><li style="list-style-type:disc">When invoked, Spring checks the current user’s authorities from SecurityContext:<ul id="24c80893-a745-8039-995d-d431f08d058d" class="bulleted-list"><li style="list-style-type:circle">If contains ROLE_ADMIN → proceed.</li></ul><ul id="24c80893-a745-8008-a4c2-e8d89d050efc" class="bulleted-list"><li style="list-style-type:circle">Else → AccessDeniedException → 403 (handled by @ControllerAdvice).</li></ul></li></ul><ol type="1" id="24c80893-a745-80cb-b9ed-d2146e0f22e7" class="numbered-list" start="1"><li>Controller → Service → Repository → DB</li></ol><ul id="24c80893-a745-8047-9d59-da078933d513" class="bulleted-list"><li style="list-style-type:disc">UserController:<ul id="24c80893-a745-80d3-acef-ea94d7621367" class="bulleted-list"><li style="list-style-type:circle">GET /api/users → userService.getAllUsers()</li></ul><ul id="24c80893-a745-8000-a1ea-e69d583c57a4" class="bulleted-list"><li style="list-style-type:circle">POST /api/users → @Valid payload → userService.createUser(user)</li></ul><ul id="24c80893-a745-8099-b6aa-e72827f794d7" class="bulleted-list"><li style="list-style-type:circle">DELETE /api/users/{sapid} → userService.deleteUser(sapid)</li></ul></li></ul><ul id="24c80893-a745-8026-aef2-fc03e47c85a2" class="bulleted-list"><li style="list-style-type:disc">UserService:<ul id="24c80893-a745-80c1-954a-d866b9fa1dcd" class="bulleted-list"><li style="list-style-type:circle">createUser:<ul id="24c80893-a745-80ad-a8bc-ff3c428137c5" class="bulleted-list"><li style="list-style-type:square">checks duplicate sapid, hashes password via BCrypt, saves via repository.</li></ul></li></ul><ul id="24c80893-a745-8019-9741-f08a2346f29c" class="bulleted-list"><li style="list-style-type:circle">deleteUser:<ul id="24c80893-a745-8095-9913-db3ccf72cf6f" class="bulleted-list"><li style="list-style-type:square">checks existence, deletes by sapid.</li></ul></li></ul></li></ul><ul id="24c80893-a745-8083-8c17-d33635fe5f3c" class="bulleted-list"><li style="list-style-type:disc">Repository:<ul id="24c80893-a745-80c3-91e8-d4e24f537157" class="bulleted-list"><li style="list-style-type:circle">JPA generates SQL to Neon via Hikari/Hibernate.</li></ul></li></ul><ul id="24c80893-a745-8009-8883-d4e8600c9b4f" class="bulleted-list"><li style="list-style-type:disc">Responses:<ul id="24c80893-a745-8070-9b72-e2961c1dbd76" class="bulleted-list"><li style="list-style-type:circle">Success → normal JSON body (e.g., created user).</li></ul><ul id="24c80893-a745-8065-8728-c134fda16c62" class="bulleted-list"><li style="list-style-type:circle">Failures → exceptions handled by @ControllerAdvice as structured ApiError.</li></ul></li></ul><ol type="1" id="24c80893-a745-809f-a553-c9fc3df7cf92" class="numbered-list" start="1"><li>Global exception handling (@ControllerAdvice)</li></ol><ul id="24c80893-a745-8082-a2ce-c92d9390fb52" class="bulleted-list"><li style="list-style-type:disc">Converts exceptions to consistent JSON with status codes:<ul id="24c80893-a745-8053-9995-fafa38ffb5cd" class="bulleted-list"><li style="list-style-type:circle">BadCredentialsException → 401 Unauthorized</li></ul><ul id="24c80893-a745-8073-a60e-dd9653cf8895" class="bulleted-list"><li style="list-style-type:circle">AccessDeniedException → 403 Forbidden</li></ul><ul id="24c80893-a745-803b-add7-f4cbfe4edfe1" class="bulleted-list"><li style="list-style-type:circle">NotFoundException → 404 Not Found</li></ul><ul id="24c80893-a745-80c3-954d-d498bd6edc08" class="bulleted-list"><li style="list-style-type:circle">ConflictException → 409 Conflict (duplicates, etc.)</li></ul><ul id="24c80893-a745-8042-88f0-d7cf0af55a7c" class="bulleted-list"><li style="list-style-type:circle">MethodArgumentNotValidException → 400 Bad Request with field-level errors</li></ul><ul id="24c80893-a745-8009-83e0-d9a7078d9c80" class="bulleted-list"><li style="list-style-type:circle">Fallback → 500 Internal Server Error</li></ul></li></ul><p id="24c80893-a745-8068-b5c6-cd1f55c7732e" class="">Security essentials and conventions</p><ul id="24c80893-a745-80f6-a72a-eafd0aab2bb8" class="bulleted-list"><li style="list-style-type:disc">Role handling:<ul id="24c80893-a745-8035-86f5-dc59c035a338" class="bulleted-list"><li style="list-style-type:circle">Your JWT stores role as ADMIN/USER.</li></ul><ul id="24c80893-a745-804a-9703-e5cd8c5da023" class="bulleted-list"><li style="list-style-type:circle">Filter wraps it as authority &quot;ROLE_ADMIN&quot; or &quot;ROLE_USER&quot;.</li></ul><ul id="24c80893-a745-80f4-affb-de02d3d9bcce" class="bulleted-list"><li style="list-style-type:circle">@PreAuthorize(&quot;hasRole(&#x27;ADMIN&#x27;)&quot;) expects that &quot;ROLE_&quot; prefix implicitly.</li></ul></li></ul><ul id="24c80893-a745-8074-8cff-fb1ef377ae0d" class="bulleted-list"><li style="list-style-type:disc">Token scope:<ul id="24c80893-a745-80d5-bc44-c5fece0a6f13" class="bulleted-list"><li style="list-style-type:circle">Stateless: no server sessions are stored; every request must have a valid token.</li></ul><ul id="24c80893-a745-8045-b86a-f2a9412cdf90" class="bulleted-list"><li style="list-style-type:circle">Expiration: enforced by isTokenExpired() check.</li></ul></li></ul><ul id="24c80893-a745-8025-9fcb-f789d84b4124" class="bulleted-list"><li style="list-style-type:disc">Passwords:<ul id="24c80893-a745-80fa-aa04-e68b46fad7bb" class="bulleted-list"><li style="list-style-type:circle">Always store BCrypt hashes; never store plaintext; always verify using matches().</li></ul></li></ul><p id="24c80893-a745-80c1-ad2e-d9dcd13ac51d" class="">Tracing a real request (example)</p><ul id="24c80893-a745-8044-bb21-eaa0ad7577a5" class="bulleted-list"><li style="list-style-type:disc">Login:<ul id="24c80893-a745-8038-8055-e10e9264bbc4" class="bulleted-list"><li style="list-style-type:circle">Client: POST /api/auth/login {sapid, password}</li></ul><ul id="24c80893-a745-80d7-bbd7-d190a506ce19" class="bulleted-list"><li style="list-style-type:circle">DB: find user, verify hash</li></ul><ul id="24c80893-a745-8086-925d-e1da4f6ac23c" class="bulleted-list"><li style="list-style-type:circle">Server: return JWT {&quot;token&quot;, &quot;role&quot;}</li></ul></li></ul><ul id="24c80893-a745-8093-aefc-e511acf46980" class="bulleted-list"><li style="list-style-type:disc">Create user:<ul id="24c80893-a745-80b4-82c8-fd173271e51e" class="bulleted-list"><li style="list-style-type:circle">Client: POST /api/users with Authorization: Bearer &lt;token&gt; + JSON body</li></ul><ul id="24c80893-a745-802b-b620-f450842ae13a" class="bulleted-list"><li style="list-style-type:circle">Filter: validates token, sets SecurityContext with ROLE_ADMIN</li></ul><ul id="24c80893-a745-80fd-8400-c7f07f6a3bff" class="bulleted-list"><li style="list-style-type:circle">PreAuthorize: hasRole(&#x27;ADMIN&#x27;)? Yes → proceed</li></ul><ul id="24c80893-a745-8043-8005-d96a9b8a7655" class="bulleted-list"><li style="list-style-type:circle">Controller → Service:<ul id="24c80893-a745-80a1-bf11-c81f8d3abd97" class="bulleted-list"><li style="list-style-type:square">hash password for the new user, save in DB</li></ul></li></ul><ul id="24c80893-a745-802c-b3f4-cd9da9f300c9" class="bulleted-list"><li style="list-style-type:circle">Return created user</li></ul></li></ul><p id="24c80893-a745-8081-9afb-ede21a8284b3" class="">Common pitfalls to watch</p><ul id="24c80893-a745-8015-8dc8-cefc11d914e9" class="bulleted-list"><li style="list-style-type:disc">Role mismatch: must use &quot;ROLE_&quot; prefix in authorities.</li></ul><ul id="24c80893-a745-80f3-af2e-ce736d71b55c" class="bulleted-list"><li style="list-style-type:disc">Token expired: renew via login.</li></ul><ul id="24c80893-a745-8091-9e1d-ff4db14aad50" class="bulleted-list"><li style="list-style-type:disc">Primitive types in entities for nullable columns: use Integer/Long instead of int/long.</li></ul><ul id="24c80893-a745-805f-a803-c997796ddc1d" class="bulleted-list"><li style="list-style-type:disc">Missing @EnableMethodSecurity → @PreAuthorize won’t run.</li></ul><ul id="24c80893-a745-805a-9ff6-cb57d8a60fc3" class="bulleted-list"><li style="list-style-type:disc">Wrong Authorization header: must be exactly &quot;Bearer &lt;token&gt;&quot;.</li></ul><p id="24c80893-a745-801e-aebf-da9a0d2e391d" class="">Cheat sheet of main classes and their duties</p><ul id="24c80893-a745-8047-95ef-f2cb135fb58d" class="bulleted-list"><li style="list-style-type:disc">UsersEntity: DB model + validations + schema mapping.</li></ul><ul id="24c80893-a745-8018-a6db-c9e2944d99dd" class="bulleted-list"><li style="list-style-type:disc">UserRepository: DB access (CRUD + findBySapid/findByEmail).</li></ul><ul id="24c80893-a745-80cc-983e-ddfe5707adef" class="bulleted-list"><li style="list-style-type:disc">UserService: business logic (hashing, duplicate checks, delete rules).</li></ul><ul id="24c80893-a745-8035-a424-f9c54a87f4f5" class="bulleted-list"><li style="list-style-type:disc">UserController: REST endpoints for users, admin-protected.</li></ul><ul id="24c80893-a745-802b-9964-da87462c328f" class="bulleted-list"><li style="list-style-type:disc">AuthService/AuthController: login, issue JWT.</li></ul><ul id="24c80893-a745-8034-83ae-c6e87d0c9638" class="bulleted-list"><li style="list-style-type:disc">JwtUtil: create/parse/validate tokens.</li></ul><ul id="24c80893-a745-8076-aa95-d092ee139c5b" class="bulleted-list"><li style="list-style-type:disc">JwtAuthFilter: extract token from header, set SecurityContext with authorities.</li></ul><ul id="24c80893-a745-8046-8141-ccfd081ca3b1" class="bulleted-list"><li style="list-style-type:disc">SecurityConfig: defines public/protected routes, installs JWT filter, enables method security.</li></ul><ul id="24c80893-a745-8022-b345-f6ad4297f15a" class="bulleted-list"><li style="list-style-type:disc">GlobalExceptionHandler: consistent JSON errors and status codes.</li></ul><p id="24c80893-a745-80c5-a1e4-fe031fbbd635" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Backend Functionalities</summary><div class="indented"><figure id="23580893-a745-8018-8b23-f268e93ddbbf" class="link-to-page"><a href="User%20Login%20Signup%20Authentication%2023580893a74580188b23f268e93ddbbf.html">User Login/Signup Authentication</a></figure><figure id="23580893-a745-80d1-9993-d70453a4e7c6" class="link-to-page"><a href="User%20Access%20Provisioning%2023580893a74580d19993d70453a4e7c6.html">User Access Provisioning</a></figure><figure id="23580893-a745-806e-a2e8-c0f70b007400" class="link-to-page"><a href="Appreciate%20others%2023580893a745806ea2e8c0f70b007400.html">Appreciate others</a></figure><figure id="23580893-a745-8024-be35-d4600dd65aef" class="link-to-page"><a href="Like%20the%20Post%2023580893a7458024be35d4600dd65aef.html">Like the Post</a></figure><figure id="23580893-a745-8062-89c6-dae90cbbc6c0" class="link-to-page"><a href="Profile%20Dashboard%2023580893a745806289c6dae90cbbc6c0.html">Profile Dashboard</a></figure></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Database Configuration</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">User Table</summary><div class="indented"><ul id="23580893-a745-8051-9890-e575f6b770f4" class="bulleted-list"><li style="list-style-type:disc">Name</li></ul><ul id="23580893-a745-804c-a729-d594d39d4412" class="bulleted-list"><li style="list-style-type:disc">ID (Primary Key)</li></ul><ul id="23580893-a745-8037-92eb-e1aa7e186744" class="bulleted-list"><li style="list-style-type:disc">SAPID (Primary Key and Foreign Key)</li></ul><ul id="23580893-a745-802d-a874-ebd7c1d92dc1" class="bulleted-list"><li style="list-style-type:disc">Designation</li></ul><ul id="23580893-a745-8013-b7ab-c81fa8f430ce" class="bulleted-list"><li style="list-style-type:disc">Phone_Number</li></ul><ul id="23580893-a745-800b-800a-cb72ddd60b49" class="bulleted-list"><li style="list-style-type:disc">Project Name</li></ul><ul id="23580893-a745-80e3-adba-e370e50af978" class="bulleted-list"><li style="list-style-type:disc">Total Appreciation</li></ul><ul id="23580893-a745-8004-be35-ee42f2020018" class="bulleted-list"><li style="list-style-type:disc">Rank</li></ul><ul id="23580893-a745-8066-954a-d4c566afe135" class="bulleted-list"><li style="list-style-type:disc">Creation_date</li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">All Post Table</summary><div class="indented"><ul id="23580893-a745-8064-8038-eec0fe87b602" class="bulleted-list"><li style="list-style-type:disc">from_sapid</li></ul><ul id="23580893-a745-8052-8209-f66dec85f6d0" class="bulleted-list"><li style="list-style-type:disc">to_sapid</li></ul><ul id="23580893-a745-80ac-8a15-c85d290655e8" class="bulleted-list"><li style="list-style-type:disc">name</li></ul><ul id="23580893-a745-80d4-ba25-c80f2afd3e31" class="bulleted-list"><li style="list-style-type:disc">likes</li></ul><ul id="23580893-a745-80fe-a783-f8eae7f4da99" class="bulleted-list"><li style="list-style-type:disc">Creation_date</li></ul></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Business Logic</summary><div class="indented"><figure id="24580893-a745-804a-9933-f0b8d534e8df" class="link-to-page"><a href="Authentication%20Flow%20Logic%2024580893a745804a9933f0b8d534e8df.html">Authentication Flow Logic</a></figure></div></details><figure id="24c80893-a745-80c3-bafc-f37313c21a4e" class="link-to-page"><a href="Email%20Configuaraion%2024c80893a74580c3bafcf37313c21a4e.html">Email Configuaraion</a></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

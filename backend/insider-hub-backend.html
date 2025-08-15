@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Documentation - Insider Hub</title>
+    <link rel="icon" href="https://www.notion.so/icons/server_blue.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .doc-page {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: var(--background-primary);
+        }
+        .doc-header {
+            background: linear-gradient(135deg, var(--background-dark), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        .doc-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            transition: var(--transition-fast);
+        }
+        .back-button:hover {
+            gap: var(--spacing-sm);
+        }
+        .content-card {
+            background: var(--background-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+        .content-card h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        .backend-modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        .module-card {
+            background: var(--background-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-normal);
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--secondary-color);
+        }
+        .module-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        .module-card a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .module-card a:hover {
+            text-decoration: underline;
+        }
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        .tech-item {
+            background: var(--background-secondary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        .tech-item:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .api-overview {
+            background: var(--background-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+        .api-endpoint {
+            background: var(--background-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            margin: var(--spacing-sm) 0;
+            border-left: 4px solid var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .endpoint-method {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-list li::before {
+            content: '🔧';
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="https://www.notion.so/icons/server_blue.svg" alt="Backend" class="nav-logo">
+                <span class="nav-title">Backend Docs</span>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../frontend.html" class="nav-link">Frontend</a>
+                <a href="insider-hub-backend.html" class="nav-link active">Backend</a>
+                <a href="../frontend-backend-logic.html" class="nav-link">API Logic</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-page">
+        <!-- Header -->
+        <div class="doc-header">
+            <div class="container">
+                <a href="../index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+                <div style="text-align: center;">
+                    <img src="https://www.notion.so/icons/server_blue.svg" alt="Backend" style="width: 60px; height: 60px; margin-bottom: 1rem; filter: brightness(0) invert(1);">
+                    <h1 style="margin: 0; font-size: 3rem;">Backend Documentation</h1>
+                    <p style="margin: 1rem 0 0; font-size: 1.2rem; opacity: 0.9;">Comprehensive Server-Side Architecture</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-content">
+            <!-- Overview -->
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> Backend Overview</h2>
+                <p>The Insider Hub backend is built with modern server technologies to provide a robust, secure, and scalable API for the frontend application. It handles user authentication, data management, email notifications, and business logic for the appreciation system.</p>
+                
+                <h3>Core Capabilities</h3>
+                <ul class="feature-list">
+                    <li><strong>User Authentication & Authorization</strong> - JWT-based secure login system</li>
+                    <li><strong>RESTful API Design</strong> - Clean, consistent API endpoints</li>
+                    <li><strong>Database Management</strong> - Efficient data storage and retrieval</li>
+                    <li><strong>Email Integration</strong> - Automated notifications and alerts</li>
+                    <li><strong>Middleware Security</strong> - Request validation and protection</li>
+                    <li><strong>Session Management</strong> - Secure user session handling</li>
+                </ul>
+            </div>
+
+            <!-- Technology Stack -->
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Technology Stack</h2>
+                <div class="tech-stack-grid">
+                    <div class="tech-item">
+                        <i class="fab fa-node-js" style="font-size: 2rem; margin-bottom: 0.5rem; color: #68a063;"></i>
+                        <h4>Node.js</h4>
+                        <p>Runtime Environment</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-server" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>Express.js</h4>
+                        <p>Web Framework</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>Database</h4>
+                        <p>Data Storage</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-key" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>JWT</h4>
+                        <p>Authentication</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-envelope" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>Email Service</h4>
+                        <p>Notifications</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-shield-alt" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>Middleware</h4>
+                        <p>Security Layer</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Endpoints Overview -->
+            <div class="content-card">
+                <h2><i class="fas fa-network-wired"></i> API Endpoints Overview</h2>
+                
+                <div class="api-overview">
+                    <h3>Authentication Endpoints</h3>
+                    <div class="api-endpoint">
+                        <div>
+                            <span class="endpoint-method">POST</span>
+                            <strong>/api/auth/login</strong> - User login with SAPID and password
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <span class="endpoint-method">POST</span>
+                            <strong>/newUser</strong> - User registration request
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <span class="endpoint-method">GET</span>
+                            <strong>/logoutuser</strong> - User session termination
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-overview">
+                    <h3>Core Feature Endpoints</h3>
+                    <div class="api-endpoint">
+                        <div>
+                            <span class="endpoint-method">GET</span>
+                            <strong>/happenings</strong> - Retrieve all appreciation posts
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <span class="endpoint-method">POST</span>
+                            <strong>/userappreciate</strong> - Submit appreciation message
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <span class="endpoint-method">POST</span>
+                            <strong>/postlike</strong> - Like appreciation post
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <span class="endpoint-method">GET</span>
+                            <strong>/userprofile</strong> - User profile data
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backend Modules -->
+            <div class="content-card">
+                <h2><i class="fas fa-cubes"></i> Backend Modules</h2>
+                <p>Explore detailed documentation for each backend component:</p>
+                
+                <div class="backend-modules">
+                    <div class="module-card">
+                        <h4><i class="fas fa-lock"></i> Authentication Flow</h4>
+                        <p>Complete user authentication system with JWT tokens, password encryption, and session management.</p>
+                        <a href="authentication-flow.html">View Documentation →</a>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4><i class="fas fa-envelope"></i> Email Configuration</h4>
+                        <p>Automated email notifications for admin approvals, user registrations, and system alerts.</p>
+                        <a href="email-configuration.html">View Documentation →</a>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4><i class="fas fa-users"></i> User Access Provisioning</h4>
+                        <p>User registration, approval workflow, and role-based access control management.</p>
+                        <a href="user-access-provisioning.html">View Documentation →</a>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4><i class="fas fa-dashboard"></i> Profile Dashboard</h4>
+                        <p>User profile management, statistics tracking, and personal data handling.</p>
+                        <a href="profile-dashboard.html">View Documentation →</a>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4><i class="fas fa-heart"></i> Appreciate Others</h4>
+                        <p>Core appreciation system for posting, managing, and displaying appreciation messages.</p>
+                        <a href="appreciate-others.html">View Documentation →</a>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4><i class="fas fa-thumbs-up"></i> Like System</h4>
+                        <p>Social interaction features including like functionality and engagement tracking.</p>
+                        <a href="like-the-post.html">View Documentation →</a>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4><i class="fas fa-sign-in-alt"></i> Login & Signup</h4>
+                        <p>Complete user onboarding process including registration, validation, and approval.</p>
+                        <a href="user-login-signup.html">View Documentation →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Features -->
+            <div class="content-card">
+                <h2><i class="fas fa-shield-alt"></i> Security Features</h2>
+                
+                <h3>Authentication & Authorization</h3>
+                <ul class="feature-list">
+                    <li><strong>JWT Token System</strong> - Secure, stateless authentication</li>
+                    <li><strong>Password Encryption</strong> - Bcrypt hashing for password security</li>
+                    <li><strong>Role-Based Access</strong> - Different permissions for users and administrators</li>
+                    <li><strong>Session Management</strong> - Automatic token expiry and renewal</li>
+                </ul>
+
+                <h3>Data Protection</h3>
+                <ul class="feature-list">
+                    <li><strong>Input Validation</strong> - Server-side validation for all inputs</li>
+                    <li><strong>SQL Injection Prevention</strong> - Parameterized queries and ORM protection</li>
+                    <li><strong>CORS Configuration</strong> - Proper cross-origin resource sharing</li>
+                    <li><strong>Rate Limiting</strong> - API call frequency restrictions</li>
+                </ul>
+
+                <h3>Middleware Protection</h3>
+                <ul class="feature-list">
+                    <li><strong>Authentication Middleware</strong> - Token verification on protected routes</li>
+                    <li><strong>Error Handling</strong> - Centralized error processing and logging</li>
+                    <li><strong>Request Logging</strong> - Comprehensive request/response logging</li>
+                    <li><strong>Data Sanitization</strong> - Input cleaning and validation</li>
+                </ul>
+            </div>
+
+            <!-- Database Schema -->
+            <div class="content-card">
+                <h2><i class="fas fa-database"></i> Database Architecture</h2>
+                
+                <h3>Core Tables</h3>
+                <div class="api-overview">
+                    <div class="api-endpoint">
+                        <div>
+                            <strong>Users Table</strong> - SAPID, name, email, role, password, creation time
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <strong>Appreciations Table</strong> - sender, recipient, message, timestamp, likes
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <strong>Likes Table</strong> - user_id, appreciation_id, timestamp
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <div>
+                            <strong>Sessions Table</strong> - user_id, token, expiry, created_at
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Key Features</h3>
+                <ul class="feature-list">
+                    <li><strong>Relational Design</strong> - Normalized database structure</li>
+                    <li><strong>Indexing</strong> - Optimized queries for performance</li>
+                    <li><strong>Data Integrity</strong> - Foreign key constraints and validation</li>
+                    <li><strong>Backup Strategy</strong> - Regular automated backups</li>
+                </ul>
+            </div>
+
+            <!-- Performance & Monitoring -->
+            <div class="content-card">
+                <h2><i class="fas fa-chart-line"></i> Performance & Monitoring</h2>
+                
+                <h3>Optimization Features</h3>
+                <ul class="feature-list">
+                    <li><strong>Connection Pooling</strong> - Efficient database connection management</li>
+                    <li><strong>Query Optimization</strong> - Efficient database queries and indexing</li>
+                    <li><strong>Caching Strategy</strong> - Redis caching for frequent data</li>
+                    <li><strong>Load Balancing</strong> - Horizontal scaling capabilities</li>
+                </ul>
+
+                <h3>Monitoring & Logging</h3>
+                <ul class="feature-list">
+                    <li><strong>Request Logging</strong> - Comprehensive API call tracking</li>
+                    <li><strong>Error Tracking</strong> - Detailed error logging and reporting</li>
+                    <li><strong>Performance Metrics</strong> - Response time and throughput monitoring</li>
+                    <li><strong>Health Checks</strong> - Automated system health monitoring</li>
+                </ul>
+            </div>
+
+            <!-- Related Documentation -->
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related Documentation</h2>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="../frontend.html" class="btn btn-primary">
+                        <i class="fas fa-arrow-left"></i>
+                        Frontend Documentation
+                    </a>
+                    <a href="../frontend-backend-logic.html" class="btn btn-secondary">
+                        <i class="fas fa-exchange-alt"></i>
+                        API Logic
+                    </a>
+                    <a href="../index.html" class="btn btn-secondary">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

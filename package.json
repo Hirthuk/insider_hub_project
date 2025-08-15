@@ -1,0 +1,80 @@
+{
+  "name": "insider-hub-project",
+  "version": "1.0.0",
+  "description": "Comprehensive documentation for Insider Hub - A college appreciation and team collaboration platform",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 3000 || python3 -m http.server 3000",
+    "serve": "npx serve . -p 3000",
+    "build": "echo 'Static site - no build step required'",
+    "preview": "npx serve . -p 4173",
+    "lint": "echo 'No linting configured'",
+    "format": "echo 'No formatting configured'",
+    "deploy": "gh-pages -d .",
+    "clean": "rm -rf dist node_modules/.cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sharankumarp/insider-hub-project.git"
+  },
+  "keywords": [
+    "react",
+    "nodejs",
+    "full-stack",
+    "appreciation-system",
+    "team-collaboration",
+    "college-project",
+    "documentation",
+    "github-pages",
+    "jwt-authentication",
+    "express",
+    "tailwind-css",
+    "vite"
+  ],
+  "author": {
+    "name": "Sharankumar P",
+    "email": "sharanclouddev@gmail.com",
+    "url": "https://sharankumarg3.netlify.app"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sharankumarp/insider-hub-project/issues"
+  },
+  "homepage": "https://sharankumarp.github.io/insider-hub-project",
+  "devDependencies": {
+    "gh-pages": "^6.0.0",
+    "serve": "^14.2.1"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "project": {
+    "name": "Insider Hub Project",
+    "type": "Final Year College Project",
+    "institution": "BITS College",
+    "year": "2024",
+    "technologies": {
+      "frontend": ["React", "Vite", "Tailwind CSS", "JavaScript"],
+      "backend": ["Node.js", "Express.js", "JWT", "Database", "Email Service"],
+      "deployment": ["GitHub Pages", "GitHub Actions"]
+    },
+    "features": [
+      "User Authentication & Authorization",
+      "Appreciation System",
+      "Profile Management",
+      "Real-time Updates",
+      "Email Notifications",
+      "Admin Panel",
+      "Search & Filter",
+      "Like System"
+    ]
+  }
+}

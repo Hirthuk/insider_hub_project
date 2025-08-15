@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Documentation - Insider Hub</title>
+    <link rel="icon" href="https://www.notion.so/icons/art_red.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .doc-page {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: var(--background-primary);
+        }
+        .doc-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        .doc-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            transition: var(--transition-fast);
+        }
+        .back-button:hover {
+            gap: var(--spacing-sm);
+        }
+        .content-card {
+            background: var(--background-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+        .content-card h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-list li::before {
+            content: '⚛️';
+            position: absolute;
+            left: 0;
+        }
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        .tech-item {
+            background: var(--background-secondary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+        .tech-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .api-section {
+            background: var(--background-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+        .api-endpoint {
+            background: var(--background-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            margin: var(--spacing-sm) 0;
+            border-left: 4px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="https://www.notion.so/icons/art_red.svg" alt="Frontend" class="nav-logo">
+                <span class="nav-title">Frontend Docs</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="frontend.html" class="nav-link active">Frontend</a>
+                <a href="backend/insider-hub-backend.html" class="nav-link">Backend</a>
+                <a href="frontend-backend-logic.html" class="nav-link">API Logic</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-page">
+        <!-- Header -->
+        <div class="doc-header">
+            <div class="container">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+                <div style="text-align: center;">
+                    <img src="https://www.notion.so/icons/art_red.svg" alt="Frontend" style="width: 60px; height: 60px; margin-bottom: 1rem; filter: brightness(0) invert(1);">
+                    <h1 style="margin: 0; font-size: 3rem;">Frontend Documentation</h1>
+                    <p style="margin: 1rem 0 0; font-size: 1.2rem; opacity: 0.9;">React + Vite + Tailwind CSS Application</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-content">
+            <!-- Technology Stack -->
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Technology Stack</h2>
+                <p><strong>Frontend part is created with React + Vite + Tailwind CSS + JavaScript</strong></p>
+                <div class="tech-stack-grid">
+                    <div class="tech-item">
+                        <i class="fab fa-react" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>React</h4>
+                        <p>UI Library</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-bolt" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>Vite</h4>
+                        <p>Build Tool</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-css3-alt" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>Tailwind CSS</h4>
+                        <p>Styling</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-js" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <h4>JavaScript</h4>
+                        <p>Programming Language</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Structure -->
+            <div class="content-card">
+                <h2><i class="fas fa-sitemap"></i> Application Structure</h2>
+                
+                <h3>Root Page</h3>
+                <p>The landing page contains two main buttons:</p>
+                <ul class="feature-list">
+                    <li><strong>Login</strong> - Routes to /login page</li>
+                    <li><strong>Request Access</strong> - Routes to /requestuser page</li>
+                </ul>
+
+                <h3>Login Page</h3>
+                <p>Simple login form with SAPID and Password inputs</p>
+                <div class="api-section">
+                    <h4>Upon Clicking Sign In Button:</h4>
+                    <div class="api-endpoint">
+                        <strong>POST /api/auth/login</strong><br>
+                        Triggers backend API to validate user credentials
+                    </div>
+                </div>
+
+                <h3>Request Access Page</h3>
+                <p>Sign-up form with the following mandatory fields:</p>
+                <ul class="feature-list">
+                    <li>SAPID</li>
+                    <li>Full Name</li>
+                    <li>Designation</li>
+                    <li>Project</li>
+                    <li>Password</li>
+                    <li>Confirm Password</li>
+                    <li>Email ID</li>
+                </ul>
+                <p><em>Note: Role, Creation time, and Unique ID are stored automatically.</em></p>
+                
+                <div class="api-section">
+                    <h4>Upon Clicking Request Access Button:</h4>
+                    <div class="api-endpoint">
+                        <strong>POST /newUser</strong><br>
+                        Sends user data to administrators and triggers email notifications to all admins for approval
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Page Features -->
+            <div class="content-card">
+                <h2><i class="fas fa-home"></i> Home Page Features</h2>
+                <p>After successful login, users access the main dashboard with 5 core options:</p>
+                
+                <ul class="feature-list">
+                    <li><strong>View Happenings</strong> - Browse all appreciation messages and team updates</li>
+                    <li><strong>Appreciate</strong> - Send appreciation messages to team members</li>
+                    <li><strong>Profile</strong> - Manage personal profile and view statistics</li>
+                    <li><strong>About</strong> - Project information and details</li>
+                    <li><strong>Logout</strong> - Secure session termination</li>
+                </ul>
+            </div>
+
+            <!-- Detailed Functionalities -->
+            <div class="content-card">
+                <h2><i class="fas fa-cogs"></i> Detailed Functionalities</h2>
+
+                <h3><i class="fas fa-eye"></i> View Happenings</h3>
+                <ul class="feature-list">
+                    <li>Display all appreciation messages between teams and employees</li>
+                    <li>Search functionality by SAPID, message content, or employee name</li>
+                    <li>Sort by most recent posts</li>
+                    <li>Like system for appreciation posts</li>
+                </ul>
+                
+                <div class="api-section">
+                    <h4>APIs Used:</h4>
+                    <div class="api-endpoint">
+                        <strong>GET /happenings</strong><br>
+                        Retrieves all happenings with authentication middleware
+                    </div>
+                    <div class="api-endpoint">
+                        <strong>POST /postlike</strong><br>
+                        Handles like functionality with user SAPID details
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-heart"></i> Appreciate</h3>
+                <p>Simple form with Recipient SAPID and appreciation message inputs</p>
+                
+                <div class="api-section">
+                    <h4>API Used:</h4>
+                    <div class="api-endpoint">
+                        <strong>POST /userappreciate</strong><br>
+                        Submits appreciation data with SAPID and message details
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-user"></i> Profile</h3>
+                <p>Comprehensive user profile displaying:</p>
+                <ul class="feature-list">
+                    <li>Total appreciation received</li>
+                    <li>Overall points achieved</li>
+                    <li>Current rank</li>
+                    <li>Project details</li>
+                    <li>SAP ID and contact information</li>
+                </ul>
+                
+                <div class="api-section">
+                    <h4>API Used:</h4>
+                    <div class="api-endpoint">
+                        <strong>GET /userprofile</strong><br>
+                        Retrieves user profile data with web token authentication
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-info-circle"></i> About</h3>
+                <p>Contains comprehensive project details and information</p>
+
+                <h3><i class="fas fa-sign-out-alt"></i> Logout</h3>
+                <p>Secure session termination</p>
+                
+                <div class="api-section">
+                    <h4>API Used:</h4>
+                    <div class="api-endpoint">
+                        <strong>GET /logoutuser</strong><br>
+                        Handles user session deletion and logout
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Features -->
+            <div class="content-card">
+                <h2><i class="fas fa-shield-alt"></i> Security Features</h2>
+                <ul class="feature-list">
+                    <li><strong>JWT Authentication</strong> - Secure token-based authentication</li>
+                    <li><strong>Password Encryption</strong> - Passwords stored in encrypted form</li>
+                    <li><strong>Admin Approval</strong> - New user requests require administrator approval</li>
+                    <li><strong>Session Management</strong> - Secure session handling and automatic logout</li>
+                    <li><strong>Input Validation</strong> - Client-side and server-side validation</li>
+                </ul>
+            </div>
+
+            <!-- Related Documentation -->
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related Documentation</h2>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="frontend-backend-logic.html" class="btn btn-primary">
+                        <i class="fas fa-exchange-alt"></i>
+                        Frontend ↔ Backend Logic
+                    </a>
+                    <a href="backend/insider-hub-backend.html" class="btn btn-secondary">
+                        <i class="fas fa-server"></i>
+                        Backend Documentation
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

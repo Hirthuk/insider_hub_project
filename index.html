@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insider Hub Project - BITS College Final Project</title>
+    <meta name="description" content="Comprehensive documentation for Insider Hub - A college appreciation and team collaboration platform">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://www.notion.so/icons/bullseye_orange.svg" type="image/svg+xml">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="https://www.notion.so/icons/bullseye_orange.svg" alt="Insider Hub" class="nav-logo">
+                <span class="nav-title">Insider Hub</span>
+            </div>
+            <button class="nav-toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#frontend" class="nav-link">Frontend</a>
+                <a href="#backend" class="nav-link">Backend</a>
+                <a href="#documentation" class="nav-link">Documentation</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <img src="https://www.notion.so/images/page-cover/webb1.jpg" alt="Hero Background" class="hero-image">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-icon">
+                <img src="https://www.notion.so/icons/bullseye_orange.svg" alt="Insider Hub Icon">
+            </div>
+            <h1 class="hero-title">Insider Hub Project</h1>
+            <p class="hero-subtitle">BITS College Final Project - Team Collaboration & Appreciation Platform</p>
+            <p class="hero-description">
+                A comprehensive full-stack application built with React, Node.js, and modern web technologies 
+                to foster team collaboration and employee appreciation within organizations.
+            </p>
+            <div class="hero-buttons">
+                <a href="#frontend" class="btn btn-primary">Explore Frontend</a>
+                <a href="#backend" class="btn btn-secondary">View Backend</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Info -->
+    <section class="team-info">
+        <div class="container">
+            <div class="welcome-card">
+                <div class="welcome-icon">👋</div>
+                <div class="welcome-content">
+                    <h2>Welcome to the team!</h2>
+                    <p>Our mission is to create a seamless platform for team appreciation and collaboration...</p>
+                    <div class="contact-info">
+                        <p><strong>Questions? Here's how to reach us:</strong></p>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> sharanclouddev@gmail.com</li>
+                            <li><i class="fas fa-globe"></i> <a href="https://sharankumarg3.netlify.app" target="_blank">sharankumarg3.netlify.app</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <h3>About the team</h3>
+                    <div class="divider"></div>
+                    <p class="team-member">Sharankumar P</p>
+                    <span class="role">Full Stack Developer</span>
+                </div>
+                <div class="team-card">
+                    <h3>Resources</h3>
+                    <div class="divider"></div>
+                    <div class="resources-content">
+                        <p>Explore our comprehensive documentation and codebase</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section id="overview" class="project-overview">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <i class="fab fa-react"></i>
+                    </div>
+                    <h3>Frontend Development</h3>
+                    <p>Built with React, Vite, and Tailwind CSS for a modern, responsive user experience</p>
+                    <ul>
+                        <li>User Authentication & Authorization</li>
+                        <li>Appreciation System</li>
+                        <li>Profile Management</li>
+                        <li>Real-time Updates</li>
+                    </ul>
+                    <a href="#frontend" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Backend Architecture</h3>
+                    <p>Robust server-side implementation with secure APIs and database management</p>
+                    <ul>
+                        <li>RESTful API Design</li>
+                        <li>JWT Authentication</li>
+                        <li>Email Configuration</li>
+                        <li>Database Integration</li>
+                    </ul>
+                    <a href="#backend" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Appreciation System</h3>
+                    <p>Core feature enabling team members to appreciate and recognize each other's work</p>
+                    <ul>
+                        <li>Post Appreciation Messages</li>
+                        <li>Like & Share System</li>
+                        <li>Search & Filter</li>
+                        <li>User Rankings</li>
+                    </ul>
+                    <a href="#documentation" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>View Happenings</h3>
+                    <p>Browse all appreciation messages and team updates in real-time</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h3>Appreciate</h3>
+                    <p>Send appreciation messages to team members and celebrate achievements</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Profile Management</h3>
+                    <p>Manage your profile, track achievements, and view personal statistics</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Authentication</h3>
+                    <p>Enterprise-grade security with JWT tokens and role-based access control</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Advanced Search</h3>
+                    <p>Find specific content by SAPID, message content, or employee name</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Integration</h3>
+                    <p>Automated email notifications for admin approvals and system updates</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Navigation -->
+    <section id="documentation" class="documentation">
+        <div class="container">
+            <h2 class="section-title">Documentation</h2>
+            <div class="doc-grid">
+                <div class="doc-category">
+                    <div class="doc-header">
+                        <img src="https://www.notion.so/icons/art_red.svg" alt="Frontend" class="doc-icon">
+                        <h3>Frontend Documentation</h3>
+                    </div>
+                    <div class="doc-links">
+                        <a href="frontend.html" class="doc-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Frontend Overview</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="frontend-backend-logic.html" class="doc-link">
+                            <i class="fas fa-code"></i>
+                            <span>Frontend ↔ Backend Logic</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="doc-category">
+                    <div class="doc-header">
+                        <img src="https://www.notion.so/icons/server_blue.svg" alt="Backend" class="doc-icon">
+                        <h3>Backend Documentation</h3>
+                    </div>
+                    <div class="doc-links">
+                        <a href="backend/insider-hub-backend.html" class="doc-link">
+                            <i class="fas fa-server"></i>
+                            <span>Backend Overview</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="backend/authentication-flow.html" class="doc-link">
+                            <i class="fas fa-lock"></i>
+                            <span>Authentication Flow</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="backend/email-configuration.html" class="doc-link">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email Configuration</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="backend/user-access-provisioning.html" class="doc-link">
+                            <i class="fas fa-users"></i>
+                            <span>User Access Provisioning</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="backend/profile-dashboard.html" class="doc-link">
+                            <i class="fas fa-dashboard"></i>
+                            <span>Profile Dashboard</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="backend/appreciate-others.html" class="doc-link">
+                            <i class="fas fa-heart"></i>
+                            <span>Appreciate Others</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="backend/like-the-post.html" class="doc-link">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>Like System</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="backend/user-login-signup.html" class="doc-link">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Login & Signup</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section id="tech-stack" class="tech-stack">
+        <div class="container">
+            <h2 class="section-title">Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h3>Frontend</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-react"></i>
+                            <span>React</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-bolt"></i>
+                            <span>Vite</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>Tailwind CSS</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-js"></i>
+                            <span>JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-category">
+                    <h3>Backend</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-node-js"></i>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-server"></i>
+                            <span>Express</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-database"></i>
+                            <span>Database</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-key"></i>
+                            <span>JWT</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-category">
+                    <h3>Tools & Deployment</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub Pages</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-cloud"></i>
+                            <span>Cloud Deploy</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong>
+                            <p>sharanclouddev@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <strong>Portfolio</strong>
+                            <p><a href="https://sharankumarg3.netlify.app" target="_blank">sharankumarg3.netlify.app</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <strong>Institution</strong>
+                            <p>BITS College - Final Year Project</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-cta">
+                    <h3>About This Project</h3>
+                    <p>This Insider Hub project represents a comprehensive full-stack application designed to enhance team collaboration and employee appreciation within organizations. Built as a final year college project, it showcases modern web development practices and technologies.</p>
+                    <div class="cta-buttons">
+                        <a href="#documentation" class="btn btn-primary">Explore Documentation</a>
+                        <a href="https://github.com" class="btn btn-secondary" target="_blank">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="https://www.notion.so/icons/bullseye_orange.svg" alt="Insider Hub" class="footer-logo">
+                    <span>Insider Hub Project</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#frontend">Frontend</a>
+                    <a href="#backend">Backend</a>
+                    <a href="#documentation">Documentation</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="mailto:sharanclouddev@gmail.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://sharankumarg3.netlify.app" title="Portfolio" target="_blank">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                    <a href="https://github.com" title="GitHub" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Insider Hub Project. BITS College Final Year Project by Sharankumar P.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

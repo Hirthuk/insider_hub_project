@@ -1,0 +1,90 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout 🛎️
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+
+    - name: Setup Node.js 📦
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install Dependencies 🔧
+      run: |
+        npm ci || npm install
+      continue-on-error: true
+
+    - name: Build Project 🏗️
+      run: |
+        # Since this is a static site, we'll just copy files
+        mkdir -p dist
+        cp -r *.html *.css *.js *.md _config.yml dist/ || true
+        cp -r backend dist/ || true
+        echo "Build completed"
+      continue-on-error: true
+
+    - name: Optimize Assets 🎨
+      run: |
+        # Minify CSS and JS files for better performance
+        echo "Optimizing assets..."
+        # Add minification steps here if needed
+      continue-on-error: true
+
+    - name: Deploy to GitHub Pages 🚀
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: gh-pages
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        commit_message: 'Deploy Insider Hub Project Documentation 🚀'
+
+    - name: Upload Build Artifacts 📋
+      uses: actions/upload-artifact@v3
+      with:
+        name: insider-hub-docs
+        path: |
+          *.html
+          *.css
+          *.js
+          *.md
+          backend/
+          _config.yml
+        retention-days: 30
+
+  lighthouse-audit:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - name: Checkout 🛎️
+      uses: actions/checkout@v3
+
+    - name: Wait for deployment ⏳
+      run: sleep 60
+
+    - name: Lighthouse Audit 🔍
+      uses: treosh/lighthouse-ci-action@v9
+      with:
+        urls: |
+          https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        configPath: './.lighthouserc.json'
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+      continue-on-error: true
