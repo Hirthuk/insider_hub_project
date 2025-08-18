@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>React Context — UserContext (Frontend Details)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial; max-width:900px; margin:2rem auto; color:#222 }
+    pre { background:#f6f8fa; padding:1rem; border-radius:6px; overflow:auto }
+    code { font-family: Consolas, 'Courier New', monospace; }
+    h1,h2 { color:#111 }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>React Context — UserContext (Context creation template)</h1>
+    <p>This page documents a simple starter template for creating and using React Context to share a <code>user</code> object across your app.</p>
+
+    <h2>Reference snippet</h2>
+    <pre><code>// 1. Create the context
+export const UserContext = createContext();
+
+// 2. Create the provider component
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+</code></pre>
+
+    <h2>Plain-English steps</h2>
+    <h3>Step 1: <code>createContext()</code></h3>
+    <p><code>createContext()</code> makes a global container (a box) where you can store data. Normally React state is local to a component. Context lets you share state across many components without passing props down the tree.</p>
+
+    <h3>Step 2: Provider</h3>
+    <p>The <strong>Provider</strong> is the delivery mechanism. Everything you put in <code>value={...}</code> will be available to any component that subscribes to the context.</p>
+    <pre><code>&lt;UserContext.Provider value={{ user, setUser }}&gt;
+  {children}
+&lt;/UserContext.Provider&gt;
+</code></pre>
+
+    <h3>Step 3: Wrapping your app</h3>
+    <p>Wrap your app so all children can access the shared values:</p>
+    <pre><code>&lt;UserProvider&gt;
+  &lt;App /&gt;
+&lt;/UserProvider&gt;
+</code></pre>
+
+    <h3>Step 4: Consuming the context</h3>
+    <p>Inside any component:</p>
+    <pre><code>const { user, setUser } = useContext(UserContext);
+</code></pre>
+    <p>This subscribes the component to the <code>UserContext</code>. You can read <code>user</code> and update it with <code>setUser</code>.</p>
+
+    <h2>Quick summary</h2>
+    <ul>
+      <li><code>createContext()</code> — makes the global container.</li>
+      <li><code>Provider</code> — supplies values to the container.</li>
+      <li><code>useContext(SomeContext)</code> — reads the values in a component.</li>
+    </ul>
+
+    <h2>Notes & suggestions</h2>
+    <ul>
+      <li>Keep the provider high in your component tree (often <code>index.js</code> or inside the root layout) so many components can access it.</li>
+      <li>For complex state, you can combine Context with <code>useReducer</code> or a state manager.</li>
+      <li>Export both the context and provider from a single module to keep imports simple.</li>
+    </ul>
+
+    <p style="margin-top:2rem">File created: <code>Insider Hub Project/react-context-user-context.html</code></p>
+  </article>
+</body>
+</html>
