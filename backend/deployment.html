@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Backend — Deployment</title>
+  <style>body{font-family:system-ui,Arial;max-width:900px;margin:2rem auto;color:#222;}</style>
+</head>
+<body>
+  <h1>Backend — Deployment</h1>
+  <p>Frontend: React → Netlify. Backend: Spring Boot in Docker running on Oracle Linux (Always Free) VM.</p>
+  <h2>Quick links</h2>
+  <ul>
+    <li><a href="/insider_hub_project/backend/authentication-flow.html">Authentication flow</a></li>
+    <li><a href="/insider_hub_project/backend/user-access-provisioning.html">User access provisioning</a></li>
+    <li><a href="/insider_hub_project/backend/profile-dashboard.html">Profile & dashboard</a></li>
+    <li><a href="/insider_hub_project/backend/appreciate-others.html">Appreciate others</a></li>
+    <li><a href="/insider_hub_project/backend/like-the-post.html">Like the post</a></li>
+    <li><a href="/insider_hub_project/backend/user-login-signup.html">User login / signup</a></li>
+  </ul>
+  <h2>Deployment notes</h2>
+  <p>Build JAR → build Docker image → push to registry → pull on Oracle Linux VM → run behind nginx. Use environment variables for secrets and SPRING_PROFILES_ACTIVE=prod. See your project notes for full commands.</p>
+</body>
+</html>
