@@ -3,21 +3,52 @@
 <head>
   <meta charset="utf-8"/>
   <title>Backend — Deployment</title>
-  <style>body{font-family:system-ui,Arial;max-width:900px;margin:2rem auto;color:#222;}</style>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    body{font-family:system-ui,Arial,Helvetica,sans-serif;max-width:900px;margin:2rem auto;color:#222;padding:1rem}
+    h1,h2{margin:.6rem 0}
+    ul{margin:.5rem 0 1rem 1.25rem}
+    pre{background:#f6f6f6;padding:.75rem;overflow:auto}
+  </style>
 </head>
 <body>
-  <h1>Backend — Deployment</h1>
-  <p>Frontend: React → Netlify. Backend: Spring Boot in Docker running on Oracle Linux (Always Free) VM.</p>
-  <h2>Quick links</h2>
-  <ul>
-    <li><a href="/insider_hub_project/backend/authentication-flow.html">Authentication flow</a></li>
-    <li><a href="/insider_hub_project/backend/user-access-provisioning.html">User access provisioning</a></li>
-    <li><a href="/insider_hub_project/backend/profile-dashboard.html">Profile & dashboard</a></li>
-    <li><a href="/insider_hub_project/backend/appreciate-others.html">Appreciate others</a></li>
-    <li><a href="/insider_hub_project/backend/like-the-post.html">Like the post</a></li>
-    <li><a href="/insider_hub_project/backend/user-login-signup.html">User login / signup</a></li>
-  </ul>
-  <h2>Deployment notes</h2>
-  <p>Build JAR → build Docker image → push to registry → pull on Oracle Linux VM → run behind nginx. Use environment variables for secrets and SPRING_PROFILES_ACTIVE=prod. See your project notes for full commands.</p>
+  <article>
+    <h1>Backend — Deployment</h1>
+    <p>Summary: Frontend (React) → Netlify. Backend (Spring Boot) → Docker image deployed on Oracle Linux (Always Free) VM. Use nginx as reverse-proxy and environment variables for secrets.</p>
+
+    <h2>Quick links (backend docs)</h2>
+    <ul>
+      <li><a href="/insider_hub_project/backend/authentication-flow.html">Authentication flow</a></li>
+      <li><a href="/insider_hub_project/backend/user-access-provisioning.html">User access provisioning</a></li>
+      <li><a href="/insider_hub_project/backend/profile-dashboard.html">Profile &amp; dashboard</a></li>
+      <li><a href="/insider_hub_project/backend/appreciate-others.html">Appreciate others</a></li>
+      <li><a href="/insider_hub_project/backend/like-the-post.html">Like the post</a></li>
+      <li><a href="/insider_hub_project/backend/user-login-signup.html">User login / signup</a></li>
+    </ul>
+
+    <h2>Example Dockerfile</h2>
+    <pre><code>FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/app/app.jar"]</code></pre>
+
+    <h2>Deploy steps (high level)</h2>
+    <ol>
+      <li>Build JAR: mvn -DskipTests package</li>
+      <li>Build image: docker build -t youruser/insider-backend:latest .</li>
+      <li>Push to registry: docker push youruser/insider-backend:latest</li>
+      <li>On Oracle VM: docker pull ... && docker run -d --name insider-backend -p 8080:8080 --restart unless-stopped -e SPRING_PROFILES_ACTIVE=prod youruser/insider-backend:latest</li>
+      <li>Configure nginx reverse proxy and TLS (Certbot) for ports 80/443.</li>
+    </ol>
+
+    <h2>Notes</h2>
+    <ul>
+      <li>Keep secrets out of the image. Use env vars, docker secrets, or mounted files.</li>
+      <li>Match filenames and case exactly for GitHub Pages.</li>
+      <li>If Pages uses docs/, place this file in docs/backend and add docs/.nojekyll.</li>
+    </ul>
+  </article>
 </body>
 </html>
